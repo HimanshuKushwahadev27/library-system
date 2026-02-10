@@ -16,7 +16,6 @@ import com.emi.Authoring_service.entity.AuthorDraftBook;
 import com.emi.Authoring_service.entity.AuthorDraftChapter;
 import com.emi.Authoring_service.enums.BookStatus;
 import com.emi.Authoring_service.exceptions.BookAlreadyExistsException;
-import com.emi.Authoring_service.exceptions.DeletedException;
 import com.emi.Authoring_service.exceptions.DraftNotFoundException;
 import com.emi.Authoring_service.exceptions.NotAuthorizedException;
 import com.emi.Authoring_service.mapper.BookDraftMapper;
@@ -65,10 +64,6 @@ public class BookDraftServiceImpl implements DraftBookService {
 			throw new NotAuthorizedException("You are not permitted to access the book draft with id " + request.id());
 		}
 		
-		if(bookDraft.getStatus() == BookStatus.DELETED){
-			throw new DeletedException("Book draft with id " + request.id() + " already deleted" );
-		}
-		
 		if(bookDraft.getStatus() == BookStatus.PUBLIC) {
 			this.updatePublishedBook(request);
 		}
@@ -105,10 +100,6 @@ public class BookDraftServiceImpl implements DraftBookService {
 			    		  () -> new DraftNotFoundException("Book Draft for the id " + draftBookId + "not found")
 			    		  );
 		
-		if(bookDraft.getStatus() == BookStatus.DELETED){
-			throw new DeletedException("Book draft with id " + draftBookId + " already deleted" );
-		}
-		
 		if(bookDraft.getAuthorId()!=authorId) {
 			throw new NotAuthorizedException("You are not permitted to access the book draft with id " + authorId);
 		}
@@ -124,24 +115,18 @@ public class BookDraftServiceImpl implements DraftBookService {
 			      .orElseThrow(
 			    		  () -> new DraftNotFoundException("Book Draft for the id " + bookId + "not found")
 			    		  );
-		
-		if(bookDraft.getStatus() == BookStatus.DELETED){
-			throw new DeletedException("Book draft with id " + bookId + " already deleted" );
-		}
 
 		draftChapterService.deleteDraftChaptersByIds(chapterDraftRepo
 				.findByDraftBookId(bookId)
 				.orElseThrow( 
-						() -> new DraftNotFoundException("Chaptwe Drafts not foung for the book id " + bookId )
+						() -> new DraftNotFoundException("Chapter Drafts not found for the book id " + bookId )
 						)
 				.stream()
 				.map(AuthorDraftChapter::getId)
 				.toList()   
 				, authorId);
 		
-		bookDraft.setIsDeleted(true);;
-		bookDraft.setStatus(BookStatus.DELETED);
-		bookDraftRepo.save(bookDraft);
+		bookDraftRepo.deleteById(bookDraft.getId());
 		
 		return "Book draft with id " + bookId + "of author " +authorId+ "is deleted !!";
 	}
@@ -154,10 +139,6 @@ public class BookDraftServiceImpl implements DraftBookService {
 			      .orElseThrow(
 			    		  () -> new DraftNotFoundException("Book Draft for the id " + request.draftBookId() + "not found")
 			    		  );
-		
-		if(bookDraft.getStatus() == BookStatus.DELETED){
-			throw new DeletedException("Book draft with id " + request.draftBookId() + " already deleted" );
-		}
 		
 		if(bookDraft.getStatus() == BookStatus.PUBLIC) {
 			throw new NotAuthorizedException("Book with id " + request.draftBookId() + "is already published");

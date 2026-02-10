@@ -17,8 +17,9 @@ import com.emi.Authoring_service.ResponseDtos.ResponseDraftChapterDto;
 import com.emi.Authoring_service.clients.CatalogService;
 import com.emi.Authoring_service.entity.AuthorDraftBook;
 import com.emi.Authoring_service.entity.AuthorDraftChapter;
+import com.emi.Authoring_service.enums.BookStatus;
 import com.emi.Authoring_service.enums.ChapterStatus;
-import com.emi.Authoring_service.exceptions.DeletedException;
+import com.emi.Authoring_service.exceptions.ChapterDraftExistsException;
 import com.emi.Authoring_service.exceptions.DraftNotFoundException;
 import com.emi.Authoring_service.exceptions.NotAuthorizedException;
 import com.emi.Authoring_service.mapper.ChapterDraftMapper;
@@ -42,14 +43,12 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 	@Override
 	public ResponseDraftChapterDto createChapterDraft(RequestChapterCreateDto request) {
 		 
-		AuthorDraftBook draftBook = bookDraftRepo
-				.findById(request.draftBookId())
-				.orElseThrow(
-						() -> new DraftNotFoundException("Draft for the book for the id " + request.draftBookId() + "is not found")
-						);
+		if(!bookDraftRepo.existsById(request.draftBookId())) {
+		throw new  DraftNotFoundException("Book draft with the id " +request.draftBookId()+ " is not found");	
+		}
 		
-		if(draftBook.getIsDeleted()) {
-			throw new DeletedException("Draft for the book with id " + request.draftBookId());
+		if(chapterDraftRepo.existsByDraftBookIdAndTitle(request.draftBookId(), request.title())) {
+			throw new ChapterDraftExistsException("Draft exists with the title "+request.title()+" for the book id "+request.draftBookId());
 		}
 		
 		AuthorDraftChapter draftChapter = chapterDraftMapper.toEntity(request);
@@ -73,12 +72,12 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 						() -> new DraftNotFoundException("Draft for the book for the id " + chapterDraft.getDraftBookId())
 						);
 		
-		if(draftBook.getIsDeleted()) {
-			throw new DeletedException("Draft for the book with id " + chapterDraft.getIsDeleted());
-		}
-		
 		if(draftBook.getAuthorId()!=authorId) {
 			throw new NotAuthorizedException("You are not authorized to make changes in the chapter draft with id " + request.id());
+		}
+		
+		if(chapterDraft.getStatus() == ChapterStatus.PUBLISHED) {
+			throw new NotAuthorizedException("you cant update the published chapter of id " + chapterDraft.getId());
 		}
 		
 		chapterDraftMapper.toUpdate(request, chapterDraft);
@@ -107,10 +106,6 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 			throw new NotAuthorizedException("You are not authorized to view the book draft with id " + bookId );
 		}
 		
-		if(draftBook.getIsDeleted()) {
-			throw new DeletedException("Book with the id " + bookId + " is deleted");
-		}
-		
 		return chapters.stream().map(chapterDraftMapper::toDto).toList();
 	}
 
@@ -134,10 +129,6 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 						() -> new DraftNotFoundException("book for the chapter of bookId " + chapterDraft.getDraftBookId() + "is not found")
 						);
 		
-		
-		if(draftBook.getIsDeleted()) {
-			throw new DeletedException("Draft for the book with id " + draftBook.getId() +" is deleted");
-		}
 		
 		if(draftBook.getAuthorId()!=authorId) {
 			throw new NotAuthorizedException("You are not authorized to view the book draft with id " + draftBook.getId());
@@ -181,13 +172,8 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 			        );
 			}
 			
-			if(draftBook.getIsDeleted()) {
-				throw new DeletedException("Book is already deleted for the draft with id " + c.getId());
-			}
-			
-
-			if(c.getIsDeleted()) {
-				throw new DeletedException("Draft for the chapter with id " + c.getId() +" is deleted");
+			if(c.getStatus() == ChapterStatus.PUBLISHED) {
+				throw new NotAuthorizedException("you cant delete the published chapter of id " + c.getId());
 			}
 			
 			if(!draftBook.getAuthorId().equals(authorId)){
@@ -199,47 +185,62 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 		});
 		
 		chaptersDraft.stream().forEach(c -> {
-			c.setIsDeleted(true);
-			c.setStatus(ChapterStatus.DELETED);
-			chapterDraftRepo.save(c);
+			chapterDraftRepo.deleteById(c.getId());
 		});
 		
-		return "The following chaters are deleted successfully";
+		return "The following chapters are deleted successfully";
 	}
 
 	
 	
 	@Override
-	public ResponseDraftChapterDto publishDraftedChapters(UUID draftChapterId, UUID authorId) {
+	public void publishDraftedChapters(Set<UUID> draftChapterIds, UUID authorId) {
 		
-		AuthorDraftChapter chapterDraft = chapterDraftRepo
-				.findById(draftChapterId)
-				.orElseThrow(
-						() -> new DraftNotFoundException("Chapter draft with the id " +draftChapterId+ " is not found")
-						);
+		List<AuthorDraftChapter> chapterDrafts =
+		        draftChapterIds.stream()
+		                .map(id -> chapterDraftRepo.findById(id)
+		                        .orElseThrow(() ->
+		                                new DraftNotFoundException(
+		                                        "Draft chapter with id " + id + " not found"
+		                                )))
+		                .toList();
 		
 
-		if(chapterDraft.getIsDeleted()) {
-			throw new DeletedException("Draft for the book with id " + chapterDraft.getId() +" is deleted");
+		
+       chapterDrafts.stream().forEach(t -> {
+    	 
+    	   t.setStatus(ChapterStatus.PUBLISHED);
+    	   chapterDraftRepo.save(t);
+       });		
+		
+       Set<UUID> bookId =  chapterDrafts.stream()
+               .map(AuthorDraftChapter::getDraftBookId)
+               .collect(Collectors.toSet());
+		
+		if (bookId.size() != 1) {
+		   throw new IllegalStateException(
+		           "All chapters must belong to the same draft book"
+		   );
 		}
 		
+		UUID draftBookId = bookId.iterator().next();
 		
-		AuthorDraftBook draftBook = bookDraftRepo
-				.findById(chapterDraft.getDraftBookId())
-				.orElseThrow(
-						() -> new DraftNotFoundException("book for the chapter of bookId " + chapterDraft.getDraftBookId() + "is not found")
-						);
-		
-		
-		if(draftBook.getIsDeleted()) {
-			throw new DeletedException("Draft for the book with id " + draftBook.getId() +" is deleted");
-		}
+			
+		AuthorDraftBook  draftBook = bookDraftRepo.findById(draftBookId)
+					                .orElseThrow(() ->
+					                new DraftNotFoundException(
+					                        "Draft book with id " + draftBookId + " not found"
+					                ));
 		
 		if(draftBook.getAuthorId()!=authorId) {
 			throw new NotAuthorizedException("You are not authorized to view the book draft with id " + draftBook.getId());
 		}
 		
-		catalogService.createBookContent(null);
+		if(draftBook.getStatus()!= BookStatus.PUBLIC) {
+			throw new NotAuthorizedException("Please first publish the book with id " +draftBook.getId() +" then publish the chapters");
+		}
+		
+		catalogService.createMultipleBookContents(chapterDraftMapper.toPublishChapters(chapterDrafts));
 	}
 
 }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.emi.Authoring_service.exceptions.BookAlreadyExistsException;
-import com.emi.Authoring_service.exceptions.DeletedException;
+import com.emi.Authoring_service.exceptions.ChapterDraftExistsException;
 import com.emi.Authoring_service.exceptions.DraftNotFoundException;
 import com.emi.Authoring_service.exceptions.NotAuthorizedException;
 
@@ -34,8 +34,8 @@ public class GlobalExceptionHandler {
 				.body(ex.getMessage());
 	}
 	
-	@ExceptionHandler(DeletedException.class)
-	public ResponseEntity<?> deleteHandling(DeletedException ex){
+	@ExceptionHandler(ChapterDraftExistsException.class)
+	public ResponseEntity<?> chapterDraftExistsHandling(ChapterDraftExistsException ex){
 		return ResponseEntity
 				.status(404)
 				.body(ex.getMessage());

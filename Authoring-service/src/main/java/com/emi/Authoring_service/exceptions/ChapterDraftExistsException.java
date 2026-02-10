@@ -1,14 +1,13 @@
 package com.emi.Authoring_service.exceptions;
 
-public class DeletedException extends RuntimeException {
+public class ChapterDraftExistsException extends RuntimeException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public DeletedException(String msg) {
+
+	public ChapterDraftExistsException(String msg){
 		super(msg);
 	}
-
 }

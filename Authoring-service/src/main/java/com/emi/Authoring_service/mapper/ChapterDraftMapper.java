@@ -1,15 +1,18 @@
 package com.emi.Authoring_service.mapper;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.emi.Authoring_service.RequestDtos.RequestChapterCreateDto;
+import com.emi.Authoring_service.RequestDtos.RequestCreateContentDto;
 import com.emi.Authoring_service.RequestDtos.RequestUpdateDraftChapterDto;
 import com.emi.Authoring_service.ResponseDtos.ResponseDraftChapterDto;
-import com.emi.Authoring_service.entity.AuthorDraftBook;
 import com.emi.Authoring_service.entity.AuthorDraftChapter;
 import com.emi.Authoring_service.enums.ChapterStatus;
+
+import jakarta.validation.Valid;
 
 @Component
 public class ChapterDraftMapper {
@@ -54,6 +57,22 @@ public class ChapterDraftMapper {
 		draftChapter.setStatus(request.status());
 		draftChapter.setPrice(request.price());
 		
+	}
+
+	public @Valid RequestCreateContentDto toPublishChapters(AuthorDraftChapter chapterDrafts) {
+		return new RequestCreateContentDto(
+				chapterDrafts.getId(),
+				chapterDrafts.getTitle(),
+				chapterDrafts.getChapterOrder(),
+				chapterDrafts.getPrice(),
+				chapterDrafts.getContent(),
+				chapterDrafts.getFreePreview()
+				);
+	}
+
+	
+	public @Valid List<RequestCreateContentDto> toPublishChapters(List<AuthorDraftChapter> chapterDrafts) {
+		return chapterDrafts.stream().map(this::toPublishChapters).toList();
 	}
 
 }

@@ -1,8 +1,7 @@
 package com.emi.Authoring_service.RequestDtos;
 
 import java.math.BigDecimal;
-import java.util.Map;
-import java.util.UUID;
+ import java.util.UUID;
 
 import com.emi.Authoring_service.enums.BookStatus;
 

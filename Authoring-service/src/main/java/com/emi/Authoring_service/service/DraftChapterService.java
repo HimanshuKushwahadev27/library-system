@@ -15,9 +15,8 @@ public interface DraftChapterService {
 	public List<ResponseDraftChapterDto >  getMyDraftChaptersByBookId(UUID authorId, UUID bookId);
 	public ResponseDraftChapterDto   getMyDraftChapterById(UUID authorId, UUID draftChapterId);
 	
-	public String deleteDraftChaptersByIds(List<UUID> chapterId, UUID authorId);
-	
-	public ResponseDraftChapterDto  publishDraftedChapters( UUID draftChapterId, UUID authorId);
+	public String deleteDraftChaptersByIds(List<UUID> chapterId, UUID authorId);	
+	public void  publishDraftedChapters( Set<UUID> draftChapterId, UUID authorId);
 	
 	public List<ResponseDraftChapterDto> getMyDraftChaptersByChapterIds(UUID authorId, Set<UUID> chaterIds);
 

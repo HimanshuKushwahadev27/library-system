@@ -8,8 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.emi.Authoring_service.entity.AuthorDraftChapter;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public interface DraftChapterRepo extends JpaRepository<AuthorDraftChapter, UUID> {
 
 	Optional<List<AuthorDraftChapter>> findByDraftBookId(UUID bookId);
+
+	boolean existsByDraftBookIdAndTitle(@NotNull UUID draftBookId, @NotBlank String title);
 
 }
