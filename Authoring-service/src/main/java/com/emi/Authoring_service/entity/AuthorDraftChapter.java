@@ -10,7 +10,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 public class AuthorDraftChapter {
 
 	@Id
+	@GeneratedValue
 	private UUID id;
 	
 	@Column(name="draft_book_id", nullable=false)
@@ -53,7 +54,5 @@ public class AuthorDraftChapter {
 	@Enumerated(EnumType.STRING)
 	@Column(name="status", nullable=false)
 	private ChapterStatus status;
-	
-	@Column(name="is_deleted", nullable=false)
-	private Boolean isDeleted;
+
 }

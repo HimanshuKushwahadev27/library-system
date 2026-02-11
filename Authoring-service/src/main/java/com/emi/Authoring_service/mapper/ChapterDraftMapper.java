@@ -27,7 +27,6 @@ public class ChapterDraftMapper {
 		draftChapter.setFreePreview(request.freePreview());
 		draftChapter.setCreatedAt(Instant.now());
 		draftChapter.setUpdatedAt(Instant.now());
-		draftChapter.setIsDeleted(false);
 		draftChapter.setStatus(ChapterStatus.DRAFTED);
 		draftChapter.setPrice(request.price());
 		

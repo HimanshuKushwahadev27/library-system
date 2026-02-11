@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,32 +35,34 @@ public class DraftBookController {
 	}
 	
 	@PatchMapping("/update")
-	public ResponseEntity<ResponseDraftBookDto> updateBookDraft( RequestUpdateDraftBookDto  request) {
+	public ResponseEntity<ResponseDraftBookDto> updateBookDraft(@RequestBody @Valid RequestUpdateDraftBookDto  request) {
 		return ResponseEntity.ok(draftBookService.updateBookDraft(request));
 	}
-	@GetMapping("/books")
-	public ResponseEntity<List<ResponseDraftBookDto>>  getMyDraftBooks(UUID authorId){
+	
+	@GetMapping("/books/{authorId}")
+	public ResponseEntity<List<ResponseDraftBookDto>>  getMyDraftBooks(@PathVariable UUID authorId){
 		return ResponseEntity.ok(draftBookService.getMyDraftBooks(authorId));
 	}
+	
 	@GetMapping("/book/{authorId}/{draftBookId}")
-	public ResponseEntity<ResponseDraftBookDto>  getMyDraftBooksById(UUID authorId, UUID draftBookId){
+	public ResponseEntity<ResponseDraftBookDto>  getMyDraftBooksById(@PathVariable UUID authorId, @PathVariable UUID draftBookId){
 		return ResponseEntity.ok(draftBookService.getMyDraftBooksById(authorId, draftBookId));
 	}
 	
-	@DeleteMapping("/delete")
-	public ResponseEntity<String> deleteDraftBookById(UUID bookId, UUID authorId) {
+	@DeleteMapping("/delete/{bookId}/{authorId}")
+	public ResponseEntity<String> deleteDraftBookById(@PathVariable UUID bookId, @PathVariable UUID authorId) {
 		return ResponseEntity.ok(draftBookService.deleteDraftBookById(bookId, authorId));
 	}
 	
-	@PostMapping("/publish")
-	public ResponseEntity<String> publishDraftedBook( PublishDraftBookRequest request, UUID authorId) {
+	@PostMapping("/publish/{authorId}")
+	public ResponseEntity<String> publishDraftedBook( @RequestBody @Valid PublishDraftBookRequest request, @PathVariable UUID authorId) {
 		draftBookService.publishDraftedBook(request, authorId);
 		return ResponseEntity.ok("Book published successfully");
 	}
 	
 
 	@PatchMapping("/updatePublish")
-	public ResponseEntity<String> updatePublishedBook( RequestUpdateDraftBookDto request) {
+	public ResponseEntity<String> updatePublishedBook(@RequestBody @Valid RequestUpdateDraftBookDto request) {
 		draftBookService.updatePublishedBook(request);
 		return ResponseEntity.ok("Book Updated Successfully");
 	}

@@ -3,6 +3,7 @@ package com.emi.Authoring_service.ServiceImpl;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.emi.Authoring_service.Repository.DraftBookRepo;
@@ -35,7 +36,7 @@ public class BookDraftServiceImpl implements DraftBookService {
 	private final DraftBookRepo bookDraftRepo;
 	private final CatalogService catalogService;
 
-	
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Transactional
 	@Override
 	public ResponseDraftBookDto createBookDraft(RequestBookCreateDto request) {
@@ -50,6 +51,7 @@ public class BookDraftServiceImpl implements DraftBookService {
 		return bookDraftMapper.toDto(draftBook);
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Transactional
 	@Override
 	public ResponseDraftBookDto updateBookDraft(RequestUpdateDraftBookDto request) {
@@ -60,7 +62,7 @@ public class BookDraftServiceImpl implements DraftBookService {
 				    		  () -> new DraftNotFoundException("Book Draft for the id " + request.id() + "not found")
 				    		  );
 		
-		if(bookDraft.getAuthorId()!=request.authorId()) {
+		if(!bookDraft.getAuthorId().equals(request.authorId())) {
 			throw new NotAuthorizedException("You are not permitted to access the book draft with id " + request.id());
 		}
 		
@@ -74,6 +76,7 @@ public class BookDraftServiceImpl implements DraftBookService {
 		return bookDraftMapper.toDto(bookDraft);
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public List<ResponseDraftBookDto> getMyDraftBooks(UUID authorId) {
 		
@@ -81,16 +84,17 @@ public class BookDraftServiceImpl implements DraftBookService {
 				         		.findAllByAuthorId(authorId)
 				         		.orElseThrow(() -> new DraftNotFoundException("No drafted books for authorId " + authorId));
 		
-		
-		
+		if(bookDrafts.isEmpty()){
+			throw new DraftNotFoundException("No drafted books for authorId " + authorId);
+		}
 		return bookDrafts
 				.stream()
-				.filter(t -> !t.getIsDeleted())
 				.map(bookDraftMapper::toDto)
 				.toList();
 		
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public ResponseDraftBookDto getMyDraftBooksById(UUID authorId, UUID draftBookId) {
 		
@@ -100,13 +104,14 @@ public class BookDraftServiceImpl implements DraftBookService {
 			    		  () -> new DraftNotFoundException("Book Draft for the id " + draftBookId + "not found")
 			    		  );
 		
-		if(bookDraft.getAuthorId()!=authorId) {
+		if(!bookDraft.getAuthorId().equals(authorId)) {
 			throw new NotAuthorizedException("You are not permitted to access the book draft with id " + authorId);
 		}
 		
 		return bookDraftMapper.toDto(bookDraft);
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Transactional
 	@Override
 	public String deleteDraftBookById(UUID bookId, UUID authorId) {
@@ -131,6 +136,7 @@ public class BookDraftServiceImpl implements DraftBookService {
 		return "Book draft with id " + bookId + "of author " +authorId+ "is deleted !!";
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Transactional
 	@Override
 	public void publishDraftedBook(PublishDraftBookRequest request, UUID authorId) {
@@ -144,7 +150,7 @@ public class BookDraftServiceImpl implements DraftBookService {
 			throw new NotAuthorizedException("Book with id " + request.draftBookId() + "is already published");
 		}
 		
-		if(bookDraft.getAuthorId()!=authorId) {
+		if(!bookDraft.getAuthorId().equals(authorId)) {
 			throw new NotAuthorizedException("You are not permitted to access the book draft with id " + authorId);
 		}
 		
@@ -157,6 +163,7 @@ public class BookDraftServiceImpl implements DraftBookService {
 					);
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Transactional
 	@Override
 	public void updatePublishedBook(RequestUpdateDraftBookDto request) {

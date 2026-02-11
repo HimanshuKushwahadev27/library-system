@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.emi.Authoring_service.Repository.DraftBookRepo;
@@ -39,6 +40,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 	private final CatalogService catalogService;
 	
 	
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Transactional
 	@Override
 	public ResponseDraftChapterDto createChapterDraft(RequestChapterCreateDto request) {
@@ -57,6 +59,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 		return chapterDraftMapper.toDto(draftChapter);
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public ResponseDraftChapterDto updateChapterDraft(RequestUpdateDraftChapterDto request, UUID authorId) {
 		
@@ -72,7 +75,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 						() -> new DraftNotFoundException("Draft for the book for the id " + chapterDraft.getDraftBookId())
 						);
 		
-		if(draftBook.getAuthorId()!=authorId) {
+		if(!draftBook.getAuthorId().equals(authorId)){
 			throw new NotAuthorizedException("You are not authorized to make changes in the chapter draft with id " + request.id());
 		}
 		
@@ -87,6 +90,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 		
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public List<ResponseDraftChapterDto> getMyDraftChaptersByBookId(UUID authorId, UUID bookId) {
 		
@@ -102,19 +106,20 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 						() -> new DraftNotFoundException("Draft for the book for the id " + bookId)
 						);
 		
-		if(draftBook.getAuthorId()!=authorId) {
+		if(!draftBook.getAuthorId().equals(authorId)) {
 			throw new NotAuthorizedException("You are not authorized to view the book draft with id " + bookId );
 		}
 		
 		return chapters.stream().map(chapterDraftMapper::toDto).toList();
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public List<ResponseDraftChapterDto> getMyDraftChaptersByChapterIds(UUID authorId, Set<UUID> chapterIds){
 		return chapterIds.stream().map(id -> this.getMyDraftChapterById(authorId, id)).toList();
 	}
 	
-	
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public ResponseDraftChapterDto getMyDraftChapterById(UUID authorId, UUID draftChapterId) {
 		AuthorDraftChapter chapterDraft = chapterDraftRepo
@@ -130,7 +135,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 						);
 		
 		
-		if(draftBook.getAuthorId()!=authorId) {
+		if(!draftBook.getAuthorId().equals(authorId)) {
 			throw new NotAuthorizedException("You are not authorized to view the book draft with id " + draftBook.getId());
 		}
 		
@@ -138,6 +143,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 
 	}
 
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public String deleteDraftChaptersByIds(List<UUID> chapterId, UUID authorId) {
 		
@@ -192,7 +198,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 	}
 
 	
-	
+//	@PreAuthorize("hasRole('AUTHOR')")
 	@Override
 	public void publishDraftedChapters(Set<UUID> draftChapterIds, UUID authorId) {
 		
@@ -232,7 +238,7 @@ public class ChapterDraftServiceImpl implements DraftChapterService {
 					                        "Draft book with id " + draftBookId + " not found"
 					                ));
 		
-		if(draftBook.getAuthorId()!=authorId) {
+		if(!draftBook.getAuthorId().equals(authorId)) {
 			throw new NotAuthorizedException("You are not authorized to view the book draft with id " + draftBook.getId());
 		}
 		

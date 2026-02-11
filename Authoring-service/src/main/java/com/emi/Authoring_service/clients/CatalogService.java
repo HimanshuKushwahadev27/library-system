@@ -19,8 +19,8 @@ import com.emi.Authoring_service.ResponseDtos.ResponseContentDto;
 
 import jakarta.validation.Valid;
 
-@FeignClient(value="Catalog-service",
-             url = "http://Catalog-service:8080")
+@FeignClient(value="catalog-service",
+             url = "http://catalog-service:8080")
 public interface CatalogService {
 
 	@PostMapping(value="/create")
