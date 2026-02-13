@@ -20,15 +20,61 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+      
+      
+  keycloak-db:
+     image: postgres:15
+     container_name: keycloak-db
+     restart: always
+     environment:
+       POSTGRES_DB: keycloak
+       POSTGRES_USER: keycloak
+       POSTGRES_PASSWORD: keycloak
+     volumes:
+       - keycloak_db_data:/var/lib/postgresql/data
+     networks:
+       - Library-net
+       
+       
+  keycloak:
+     image: quay.io/keycloak/keycloak:24.0.1
+     container_name: keycloak
+     command: 
+      - start-dev
+      - --spi-theme-cache-themes=false
+      - --spi-theme-cache-templates=false
+     restart: always
+     depends_on:
+       - keycloak-db
+     environment:
+       KEYCLOAK_ADMIN: admin
+       KEYCLOAK_ADMIN_PASSWORD: admin
+       KC_DB: postgres
+       KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+       KC_DB_USERNAME: keycloak
+       KC_DB_PASSWORD: keycloak
+       KC_HOSTNAME: localhost
+       KC_HOSTNAME_PORT: 8181
+       KC_HOSTNAME_STRICT: "false"
+       KC_HTTP_ENABLED: "true"
+     ports:
+       - "8181:8080"
+     networks:
+       - Library-net
+     volumes:
+       - ../keycloak-themes:/opt/keycloak/themes
 
   authoring-service:
-    build: ../Authoring-service
+    build: 
+      context: ..
+      dockerfile: Authoring-service/Dockerfile
     container_name: authoring-service
     restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/authoringservice_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8080/realms/Library-realm
     ports:
       - "8081:8080"
     depends_on:
@@ -38,13 +84,16 @@ services:
       - Library-net
 
   catalog-service:
-    build: ../Catalog-Service
+    build: 
+      context: ..
+      dockerfile: Catalog-Service/Dockerfile
     container_name: catalog-Service
     restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/catalogservice_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8080/realms/Library-realm
     ports:
       - "8082:8080"
     depends_on:
@@ -53,9 +102,73 @@ services:
     networks:
       - Library-net
       
+      
+  user-service:
+    build: 
+      context: ..
+      dockerfile: User-service/Dockerfile
+    container_name: user-Service
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/userservice_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8080/realms/Library-realm
+    ports:
+      - "8083:8080"
+    depends_on:
+       postgres:
+        condition: service_healthy 
+    networks:
+      - Library-net
+      
+      
+  author-service:
+    build:
+      context: ..
+      dockerfile: Author-Service/Dockerfile
+    container_name: author-Service
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/authorservice_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8080/realms/Library-realm
+    ports:
+      - "8084:8080"
+    depends_on:
+       postgres:
+        condition: service_healthy 
+    networks:
+      - Library-net
+      
+      
+  api-gateway:
+       build:
+        context: ..
+        dockerfile: Api-gateway/Dockerfile
+       container_name: api-gateway
+       restart: on-failure
+       environment:
+         SPRING_APPLICATION_NAME: api-gateway
+         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8080/realms/Library-realm
+       ports:
+         - "8089:8080"
+       depends_on:
+         - author-service
+         - authoring-service
+         - user-service
+         - catalog-service
+         - keycloak
+       networks:
+         - Library-net   
+      
+      
+
 networks:
   Library-net:
       driver: bridge
 
 volumes:
   postgres_data:
+  keycloak_db_data:
