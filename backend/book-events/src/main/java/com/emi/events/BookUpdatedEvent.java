@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class BookUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -2027190963389311774L;
+  private static final long serialVersionUID = -6125206396878915573L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BookUpdatedEvent\",\"namespace\":\"com.emi.events\",\"fields\":[{\"name\":\"bookId\",\"type\":\"string\"},{\"name\":\"title\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"description\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"price\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"lifeCycleStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"BookLifeCycleStatus\",\"symbols\":[\"DRAFT\",\"ONGOING\",\"COMPLETED\"]}],\"default\":null},{\"name\":\"visibilityStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"BookVisibilityStatus\",\"symbols\":[\"PRIVATE\",\"PUBLIC\"]}],\"default\":null},{\"name\":\"freePreview\",\"type\":[\"null\",\"boolean\"],\"default\":null},{\"name\":\"updatedAt\",\"type\":\"long\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BookUpdatedEvent\",\"namespace\":\"com.emi.events\",\"fields\":[{\"name\":\"bookId\",\"type\":\"string\"},{\"name\":\"title\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"description\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"price\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"lifeCycleStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"BookLifeCycleStatus\",\"symbols\":[\"DRAFT\",\"ONGOING\",\"COMPLETED\"]}],\"default\":null},{\"name\":\"visibilityStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"BookVisibilityStatus\",\"symbols\":[\"PRIVATE\",\"PUBLIC\",\"DELETE\"]}],\"default\":null},{\"name\":\"freePreview\",\"type\":[\"null\",\"boolean\"],\"default\":null},{\"name\":\"updatedAt\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();

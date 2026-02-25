@@ -24,7 +24,7 @@
         {
           "type": "enum",
           "name": "BookVisibilityStatus",
-          "symbols": ["PRIVATE", "PUBLIC"]
+          "symbols": ["PRIVATE", "PUBLIC", "DELETE"]
         }
       ],
       "default": null

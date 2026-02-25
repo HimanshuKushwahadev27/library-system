@@ -1,0 +1,8 @@
+{
+  "type": "record",
+  "name": "BookDeletedEvent",
+  "namespace": "com.emi.events",
+  "fields": [
+    { "name": "bookId", "type": "string" }
+    ]
+}

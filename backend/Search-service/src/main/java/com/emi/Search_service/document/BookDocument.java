@@ -40,7 +40,7 @@ public class BookDocument {
     @Field(type = FieldType.Double)
     private Double price;   
 
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Text)
     private List<String> authorName;
 
     @Field(type = FieldType.Keyword)

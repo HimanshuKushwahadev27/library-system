@@ -25,6 +25,7 @@ import com.emi.Catalog_Service.exception.NotAuthorizedException;
 import com.emi.Catalog_Service.mapper.AuthorSnapshotMapper;
 import com.emi.Catalog_Service.mapper.BookMapper;
 import com.emi.Catalog_Service.mapper.GenreSnapshotMapper;
+import com.emi.events.BookDeletedEvent;
 import com.emi.events.BookPublishedEvent;
 import com.emi.events.BookUpdatedEvent;
 
@@ -173,7 +174,8 @@ public class BookServiceImpl implements BookService {
 		}
 		
 		bookRepo.save(book);
-		
+		BookDeletedEvent event = BookDeletedEvent.newBuilder().setBookId(book.getId().toString()).build();
+		catalogProducerService.sendBookDeletedEvent(event);
 		return "Book deleted successfully with id: " + bookId;
 	}
 

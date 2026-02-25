@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.emi.Search_service.Repo.BookDocumentRepo;
 import com.emi.Search_service.document.BookDocument;
+import com.emi.Search_service.exceptions.DocumentNotFoundException;
+import com.emi.events.BookDeletedEvent;
 import com.emi.events.BookPublishedEvent;
 import com.emi.events.BookUpdatedEvent;
+import com.emi.events.BookVisibilityStatus;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +42,8 @@ public class ConsumeService {
 	@KafkaListener(topics = "Book-update-event", groupId="searchService")
 	public void listenUpdateBook(BookUpdatedEvent event) {
 	    BookDocument doc = bookDocumentRepo
-	            .findByBookId(event.getBookId().toString());
+	            .findByBookId(event.getBookId().toString())
+	            .orElseThrow(() -> new DocumentNotFoundException("no Doc for the given book id +" + event.getBookId()));
 	    
 	    doc.setDescription((String)event.getDescription());
 	    doc.setFreePreview(event.getFreePreview());
@@ -50,7 +54,16 @@ public class ConsumeService {
 	    doc.setTitle((String)event.getTitle());
 	    
 	    bookDocumentRepo.save(doc);
+	}
+	
+	@KafkaListener(topics = "Book-delete-event", groupId="searchService")
+	public void listenDeleteBook(BookDeletedEvent event){
+	    BookDocument doc = bookDocumentRepo
+	            .findByBookId(event.getBookId().toString())
+	            .orElseThrow(() -> new DocumentNotFoundException("no Doc for the given book id +" + event.getBookId()));
 	    
-
+	    doc.setVisibilityStatus(BookVisibilityStatus.DELETE.toString());
+	    
+	    bookDocumentRepo.save(doc);
 	}
 }
