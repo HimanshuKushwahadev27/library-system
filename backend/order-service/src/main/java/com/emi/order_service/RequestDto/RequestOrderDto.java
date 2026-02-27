@@ -5,7 +5,6 @@ import java.util.UUID;
 
 public record RequestOrderDto(
 		UUID bookid,
-		UUID userId,
 		BigDecimal price
 		) {
 

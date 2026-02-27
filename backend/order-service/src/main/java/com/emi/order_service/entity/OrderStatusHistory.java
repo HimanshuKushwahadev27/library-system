@@ -42,5 +42,5 @@ public class OrderStatusHistory {
 	
 	
 	@Column(name = "changed_by", nullable = false, unique = false)
-	private UUID chnagedBy;
+	private UUID changedBy;
 }

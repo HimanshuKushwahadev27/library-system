@@ -43,7 +43,7 @@ public class Order {
 	@Column(name = "payment_id", nullable = false, unique = true)
 	private UUID paymentId;
 	
-	@Column(name = "created_at", nullable = false, unique = false)
+	@Column(name = "created_at", nullable = false, updatable = false)
 	private Instant createdAt;
 	
 	@Column(name = "updated_at", nullable = false, unique = false)
