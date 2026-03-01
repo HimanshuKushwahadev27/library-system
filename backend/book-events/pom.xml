@@ -1,82 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	    <parent>
-        <groupId>com.emi</groupId>
-        <artifactId>library-microservice</artifactId>
-        <version>1.0.0</version>
-    </parent>
-    
+	<parent>
+		<groupId>com.emi</groupId>
+		<artifactId>library-microservice</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
 	<artifactId>book-events</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>book-events</name>
 	<description>Shared book event contracts</description>
-	
-	<url/>
+
+	<url />
 	<licenses>
-		<license/>
+		<license />
 	</licenses>
 	<developers>
-		<developer/>
+		<developer />
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
 	</scm>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
-	
-	    <repositories>
-        <repository>
-	            <id>confluent</id>
-	            <url>https://packages.confluent.io/maven/</url>
-	        </repository>
-	    </repositories>
+
+	<repositories>
+		<repository>
+			<id>confluent</id>
+			<url>https://packages.confluent.io/maven/</url>
+		</repository>
+	</repositories>
 	<dependencies>
-		
- 		 <!-- Avro -->
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-        </dependency>
 
-        <!-- Kafka Avro Serializer -->
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-        </dependency>
+		<!-- Avro -->
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+		</dependency>
 
-        <!-- Schema Registry Client -->
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-schema-registry-client</artifactId>
-        </dependency>
+		<!-- Kafka Avro Serializer -->
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-avro-serializer</artifactId>
+		</dependency>
+
+		<!-- Schema Registry Client -->
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-schema-registry-client</artifactId>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
-		
+
 			<plugin>
-			    <groupId>org.apache.avro</groupId>
-			    <artifactId>avro-maven-plugin</artifactId>
-			    <version>1.11.3</version>
-			    <executions>
-			        <execution>
-			            <phase>generate-sources</phase>
-			            <goals>
-			                <goal>schema</goal>
-			            </goals>
-			            <configuration>
-			                <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
-			                <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-			            </configuration>
-			        </execution>
-			    </executions>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+				<version>1.11.3</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>schema</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>
+								${project.basedir}/src/main/resources/avro</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>

@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "PaymentGeneratedEvent",
+  "namespace": "com.emi.events",
+  "fields": [
+    { "name": "orderId", "type": "string" },
+    { "name": "paymentId", "type": "string" },
+    { "name": "paymentStatus",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "PaymentStatus",
+          "symbols": ["INITIATED", "SUCCESS", "FAILED"]
+        }
+      ],
+      "default": null
+    }
+  ]
+}
