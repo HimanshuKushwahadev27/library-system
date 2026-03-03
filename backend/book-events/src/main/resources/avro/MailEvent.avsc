@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "MailEvent",
-  "namespace": "com.emi.events",
+  "namespace": "com.emi.events.mail",
   "fields":[
     {"name": "firstName", "type": "string"},
     {"name": "lastName", "type": "string"},

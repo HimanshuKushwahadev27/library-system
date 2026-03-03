@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emi.Catalog_Service.RequestDtos.RequestCreateContentDto;
+import com.emi.Catalog_Service.ResponseDtos.CatalogPriceResponse;
 import com.emi.Catalog_Service.ResponseDtos.ResponseContentDto;
 import com.emi.Catalog_Service.Services.BookContentService;
 
@@ -43,14 +46,21 @@ public class BookContentController {
 	
 	@GetMapping(value="/ContentIds")
 	public ResponseEntity<List<ResponseContentDto>> getBookContentsByContentIds(
-			@RequestParam List<UUID> contentIds){
-		return ResponseEntity.ok(bookContentService.getBookContentsByContentIds(contentIds));
+			@RequestParam List<UUID> contentIds,
+			@AuthenticationPrincipal Jwt jwt){
+		return ResponseEntity.ok(bookContentService.getBookContentsByContentIds(contentIds, UUID.fromString(jwt.getSubject())));
+	}
+	
+	@GetMapping(value="/internal/{bookId}/{contentId}")
+	public CatalogPriceResponse getBookContentsByContentIdsInternal(@PathVariable UUID bookId, @PathVariable UUID contentId){
+		return bookContentService.getBookContentPriceInternal(bookId,bookId);
 	}
 	
 	@GetMapping(value="/bookId/{bookId}")
 	public ResponseEntity<List<ResponseContentDto>> getBookContentByBookId(
-			@PathVariable UUID bookId){
-		return ResponseEntity.ok(bookContentService.getBookContentByBookId(bookId));
+			@PathVariable UUID bookId,
+			@AuthenticationPrincipal Jwt jwt){
+		return ResponseEntity.ok(bookContentService.getBookContentByBookId(bookId, UUID.fromString(jwt.getSubject())));
 	}
 	
 	@DeleteMapping(value="/contentIds/{authorId}")

@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "PaymentGeneratedEvent",
-  "namespace": "com.emi.events",
+  "namespace": "com.emi.events.payment",
   "fields": [
     { "name": "orderId", "type": "string" },
     { "name": "paymentId", "type": "string" },

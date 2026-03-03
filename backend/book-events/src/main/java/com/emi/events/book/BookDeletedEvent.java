@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.emi.events;
+package com.emi.events.book;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -7170911526727216048L;
+  private static final long serialVersionUID = -2726816796683616609L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BookDeletedEvent\",\"namespace\":\"com.emi.events\",\"fields\":[{\"name\":\"bookId\",\"type\":\"string\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BookDeletedEvent\",\"namespace\":\"com.emi.events.book\",\"fields\":[{\"name\":\"bookId\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -136,8 +136,8 @@ public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBas
    * Creates a new BookDeletedEvent RecordBuilder.
    * @return A new BookDeletedEvent RecordBuilder
    */
-  public static com.emi.events.BookDeletedEvent.Builder newBuilder() {
-    return new com.emi.events.BookDeletedEvent.Builder();
+  public static com.emi.events.book.BookDeletedEvent.Builder newBuilder() {
+    return new com.emi.events.book.BookDeletedEvent.Builder();
   }
 
   /**
@@ -145,11 +145,11 @@ public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBas
    * @param other The existing builder to copy.
    * @return A new BookDeletedEvent RecordBuilder
    */
-  public static com.emi.events.BookDeletedEvent.Builder newBuilder(com.emi.events.BookDeletedEvent.Builder other) {
+  public static com.emi.events.book.BookDeletedEvent.Builder newBuilder(com.emi.events.book.BookDeletedEvent.Builder other) {
     if (other == null) {
-      return new com.emi.events.BookDeletedEvent.Builder();
+      return new com.emi.events.book.BookDeletedEvent.Builder();
     } else {
-      return new com.emi.events.BookDeletedEvent.Builder(other);
+      return new com.emi.events.book.BookDeletedEvent.Builder(other);
     }
   }
 
@@ -158,11 +158,11 @@ public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBas
    * @param other The existing instance to copy.
    * @return A new BookDeletedEvent RecordBuilder
    */
-  public static com.emi.events.BookDeletedEvent.Builder newBuilder(com.emi.events.BookDeletedEvent other) {
+  public static com.emi.events.book.BookDeletedEvent.Builder newBuilder(com.emi.events.book.BookDeletedEvent other) {
     if (other == null) {
-      return new com.emi.events.BookDeletedEvent.Builder();
+      return new com.emi.events.book.BookDeletedEvent.Builder();
     } else {
-      return new com.emi.events.BookDeletedEvent.Builder(other);
+      return new com.emi.events.book.BookDeletedEvent.Builder(other);
     }
   }
 
@@ -184,7 +184,7 @@ public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBas
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.emi.events.BookDeletedEvent.Builder other) {
+    private Builder(com.emi.events.book.BookDeletedEvent.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.bookId)) {
         this.bookId = data().deepCopy(fields()[0].schema(), other.bookId);
@@ -196,7 +196,7 @@ public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBas
      * Creates a Builder by copying an existing BookDeletedEvent instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.emi.events.BookDeletedEvent other) {
+    private Builder(com.emi.events.book.BookDeletedEvent other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.bookId)) {
         this.bookId = data().deepCopy(fields()[0].schema(), other.bookId);
@@ -218,7 +218,7 @@ public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'bookId'.
       * @return This builder.
       */
-    public com.emi.events.BookDeletedEvent.Builder setBookId(java.lang.CharSequence value) {
+    public com.emi.events.book.BookDeletedEvent.Builder setBookId(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.bookId = value;
       fieldSetFlags()[0] = true;
@@ -238,7 +238,7 @@ public class BookDeletedEvent extends org.apache.avro.specific.SpecificRecordBas
       * Clears the value of the 'bookId' field.
       * @return This builder.
       */
-    public com.emi.events.BookDeletedEvent.Builder clearBookId() {
+    public com.emi.events.book.BookDeletedEvent.Builder clearBookId() {
       bookId = null;
       fieldSetFlags()[0] = false;
       return this;

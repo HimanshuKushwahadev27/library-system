@@ -2,7 +2,7 @@ package com.emi.order_service.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.emi.events.MailEvent;
+import com.emi.events.mail.MailEvent;
 import com.emi.order_service.entity.Order;
 import com.emi.order_service.entity.OrderItem;
 

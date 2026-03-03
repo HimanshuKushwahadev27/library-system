@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "BookUpdatedEvent",
-  "namespace": "com.emi.events",
+  "namespace": "com.emi.events.bookUpdate",
   "fields": [
     { "name": "bookId", "type": "string" },
     { "name": "title", "type": ["null", "string"], "default": null },

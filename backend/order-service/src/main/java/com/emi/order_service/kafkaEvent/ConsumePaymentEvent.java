@@ -5,8 +5,7 @@ import java.util.UUID;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import com.emi.events.PaymentGeneratedEvent;
-
+import com.emi.events.payment.PaymentGeneratedEvent;
 import com.emi.order_service.service.OrderService;
 
 import lombok.RequiredArgsConstructor;

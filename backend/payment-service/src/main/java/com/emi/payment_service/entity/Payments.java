@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.emi.events.PaymentStatus;
+import com.emi.events.payment.PaymentStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

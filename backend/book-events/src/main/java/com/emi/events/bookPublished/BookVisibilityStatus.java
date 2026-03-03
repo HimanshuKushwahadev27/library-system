@@ -3,11 +3,11 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.emi.events;
+package com.emi.events.bookPublished;
 @org.apache.avro.specific.AvroGenerated
 public enum BookVisibilityStatus implements org.apache.avro.generic.GenericEnumSymbol<BookVisibilityStatus> {
   PRIVATE, PUBLIC, DELETE  ;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"BookVisibilityStatus\",\"namespace\":\"com.emi.events\",\"symbols\":[\"PRIVATE\",\"PUBLIC\",\"DELETE\"]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"BookVisibilityStatus\",\"namespace\":\"com.emi.events.bookPublished\",\"symbols\":[\"PRIVATE\",\"PUBLIC\",\"DELETE\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   @Override

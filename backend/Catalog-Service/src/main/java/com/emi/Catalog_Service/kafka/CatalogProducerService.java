@@ -1,11 +1,11 @@
-package com.emi.Catalog_Service.ServiceImpl;
+package com.emi.Catalog_Service.kafka;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.emi.events.BookDeletedEvent;
-import com.emi.events.BookPublishedEvent;
-import com.emi.events.BookUpdatedEvent;
+import com.emi.events.book.BookDeletedEvent;
+import com.emi.events.bookPublished.BookPublishedEvent;
+import com.emi.events.bookUpdate.BookUpdatedEvent;
 
 import lombok.RequiredArgsConstructor;
 

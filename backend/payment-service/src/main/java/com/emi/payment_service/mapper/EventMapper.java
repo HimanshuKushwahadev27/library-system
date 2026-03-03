@@ -2,7 +2,7 @@ package com.emi.payment_service.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.emi.events.PaymentGeneratedEvent;
+import com.emi.events.payment.PaymentGeneratedEvent;
 import com.emi.payment_service.entity.Payments;
 
 @Component

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.emi.events.PaymentStatus;
+import com.emi.events.payment.PaymentStatus;
 import com.emi.payment_service.ResponseDto.ResponseOrderDto;
 import com.emi.payment_service.ResponseDto.ResponsePaymentDto;
 import com.emi.payment_service.entity.Payments;

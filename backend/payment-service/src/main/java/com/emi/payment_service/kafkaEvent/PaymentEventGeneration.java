@@ -3,7 +3,7 @@ package com.emi.payment_service.kafkaEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.emi.events.PaymentGeneratedEvent;
+import com.emi.events.payment.PaymentGeneratedEvent;
 
 import lombok.RequiredArgsConstructor;
 

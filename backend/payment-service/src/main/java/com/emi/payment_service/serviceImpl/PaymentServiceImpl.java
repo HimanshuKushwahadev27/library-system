@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.emi.events.PaymentStatus;
+import com.emi.events.payment.PaymentStatus;
 import com.emi.payment_service.RequestDto.GatewayPaymentRequest;
 import com.emi.payment_service.RequestDto.RequestPaymentDto;
 import com.emi.payment_service.ResponseDto.GatewayResponse;
@@ -74,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
 			throw new IllegalStateException("Request already in progress");
 		}
 
-		ResponseOrderDto order = orderClient.orderVaidation(request.orderID());
+		ResponseOrderDto order = orderClient.orderVaidation(request.orderId());
 		if (!order.userId().equals(keycloakId)) {
 			throw new UnauthorizedException("No authorized");
 		}

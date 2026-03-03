@@ -1,0 +1,35 @@
+{
+  "type": "record",
+  "name": "ContentPurchasedEvent",
+  "namespace": "com.emi.events.catalog",
+  "fields": [
+    { 
+      "name": "bookId", 
+      "type": "string" 
+    },
+    { 
+      "name": "userId", 
+      "type": "string" 
+    },
+    {
+      "name": "chapterIds",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    { 
+      "name": "type",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "OrderType",
+          "symbols": ["BOOK", "CONTENT"]
+        }
+      ],
+      "default": null
+    }
+  ]
+}

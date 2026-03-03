@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import com.emi.Search_service.Repo.BookDocumentRepo;
 import com.emi.Search_service.document.BookDocument;
 import com.emi.Search_service.exceptions.DocumentNotFoundException;
-import com.emi.events.BookDeletedEvent;
-import com.emi.events.BookPublishedEvent;
-import com.emi.events.BookUpdatedEvent;
-import com.emi.events.BookVisibilityStatus;
+import com.emi.events.book.BookDeletedEvent;
+import com.emi.events.bookPublished.BookPublishedEvent;
+import com.emi.events.bookPublished.BookVisibilityStatus;
+import com.emi.events.bookUpdate.BookUpdatedEvent;
 
 import lombok.RequiredArgsConstructor;
 

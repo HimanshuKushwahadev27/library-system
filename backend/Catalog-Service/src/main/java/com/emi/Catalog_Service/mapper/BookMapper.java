@@ -11,12 +11,14 @@ import org.springframework.stereotype.Component;
 import com.emi.Catalog_Service.Entity.Book;
 import com.emi.Catalog_Service.RequestDtos.RequestBookCreationDto;
 import com.emi.Catalog_Service.RequestDtos.RequsestBookUpdateDto;
+import com.emi.Catalog_Service.ResponseDtos.CatalogPriceResponse;
 import com.emi.Catalog_Service.ResponseDtos.ResponseBookDto;
 import com.emi.Catalog_Service.ResponseDtos.ResponseFullBookDto;
 import com.emi.Catalog_Service.enums.BookLifeCycleStatus;
 import com.emi.Catalog_Service.enums.BookVisibilityStatus;
-import com.emi.events.BookPublishedEvent;
-import com.emi.events.BookUpdatedEvent;
+import com.emi.events.bookPublished.BookPublishedEvent;
+import com.emi.events.bookUpdate.BookUpdatedEvent;
+
 
 @Component
 public class BookMapper {
@@ -102,15 +104,15 @@ public class BookMapper {
 		        .build();
 		
 		if(book.getStatusLifecycle()==BookLifeCycleStatus.ONGOING) {
-			event.setLifeCycleStatus(com.emi.events.BookLifeCycleStatus.ONGOING);
+			event.setLifeCycleStatus(com.emi.events.bookPublished.BookLifeCycleStatus.ONGOING);
 		}else {
-			event.setLifeCycleStatus(com.emi.events.BookLifeCycleStatus.COMPLETED);
+			event.setLifeCycleStatus(com.emi.events.bookPublished.BookLifeCycleStatus.COMPLETED);
 		}
 		
 		if(book.getStatusVisible() == BookVisibilityStatus.PUBLIC) {
-			event.setVisibilityStatus(com.emi.events.BookVisibilityStatus.PUBLIC);
+			event.setVisibilityStatus(com.emi.events.bookPublished.BookVisibilityStatus.PUBLIC);
 		}else {
-			event.setVisibilityStatus(com.emi.events.BookVisibilityStatus.PRIVATE);
+			event.setVisibilityStatus(com.emi.events.bookPublished.BookVisibilityStatus.PRIVATE);
 		}
 		
 		return event;
@@ -127,17 +129,25 @@ public class BookMapper {
 		        .build();
 		
 		if(book.getStatusLifecycle()==BookLifeCycleStatus.ONGOING) {
-			event.setLifeCycleStatus(com.emi.events.BookLifeCycleStatus.ONGOING);
+			event.setLifeCycleStatus(com.emi.events.bookUpdate.BookLifeCycleStatus.ONGOING);
 		}else {
-			event.setLifeCycleStatus(com.emi.events.BookLifeCycleStatus.COMPLETED);
+			event.setLifeCycleStatus(com.emi.events.bookUpdate.BookLifeCycleStatus.COMPLETED);
 		}
 		
 		if(book.getStatusVisible() == BookVisibilityStatus.PUBLIC) {
-			event.setVisibilityStatus(com.emi.events.BookVisibilityStatus.PUBLIC);
+			event.setVisibilityStatus(com.emi.events.bookUpdate.BookVisibilityStatus.PUBLIC);
 		}else {
-			event.setVisibilityStatus(com.emi.events.BookVisibilityStatus.PRIVATE);
+			event.setVisibilityStatus(com.emi.events.bookUpdate.BookVisibilityStatus.PRIVATE);
 		}
 		
 		return event;
+	}
+
+	public CatalogPriceResponse toCatalogPriceResponse(Book book, List<UUID> chapterIds) {
+	return new CatalogPriceResponse(
+			book.getId(),
+			chapterIds,
+			book.getPrice()
+			);
 	}
 }

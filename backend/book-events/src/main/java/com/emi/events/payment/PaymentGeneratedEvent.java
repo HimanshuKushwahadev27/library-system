@@ -3,8 +3,9 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.emi.events;
+package com.emi.events.payment;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
 import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
@@ -13,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 6752533301502048734L;
+  private static final long serialVersionUID = -6789741389756655147L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PaymentGeneratedEvent\",\"namespace\":\"com.emi.events\",\"fields\":[{\"name\":\"orderId\",\"type\":\"string\"},{\"name\":\"paymentId\",\"type\":\"string\"},{\"name\":\"paymentStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"PaymentStatus\",\"symbols\":[\"INITIATED\",\"SUCCESS\",\"FAILED\"]}],\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PaymentGeneratedEvent\",\"namespace\":\"com.emi.events.payment\",\"fields\":[{\"name\":\"orderId\",\"type\":\"string\"},{\"name\":\"paymentId\",\"type\":\"string\"},{\"name\":\"paymentStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"PaymentStatus\",\"symbols\":[\"INITIATED\",\"SUCCESS\",\"FAILED\"]}],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +75,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
 
   private java.lang.CharSequence orderId;
   private java.lang.CharSequence paymentId;
-  private com.emi.events.PaymentStatus paymentStatus;
+  private com.emi.events.payment.PaymentStatus paymentStatus;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -89,7 +90,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
    * @param paymentId The new value for paymentId
    * @param paymentStatus The new value for paymentStatus
    */
-  public PaymentGeneratedEvent(java.lang.CharSequence orderId, java.lang.CharSequence paymentId, com.emi.events.PaymentStatus paymentStatus) {
+  public PaymentGeneratedEvent(java.lang.CharSequence orderId, java.lang.CharSequence paymentId, com.emi.events.payment.PaymentStatus paymentStatus) {
     this.orderId = orderId;
     this.paymentId = paymentId;
     this.paymentStatus = paymentStatus;
@@ -119,7 +120,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
     switch (field$) {
     case 0: orderId = (java.lang.CharSequence)value$; break;
     case 1: paymentId = (java.lang.CharSequence)value$; break;
-    case 2: paymentStatus = (com.emi.events.PaymentStatus)value$; break;
+    case 2: paymentStatus = (com.emi.events.payment.PaymentStatus)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -162,7 +163,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
    * Gets the value of the 'paymentStatus' field.
    * @return The value of the 'paymentStatus' field.
    */
-  public com.emi.events.PaymentStatus getPaymentStatus() {
+  public com.emi.events.payment.PaymentStatus getPaymentStatus() {
     return paymentStatus;
   }
 
@@ -171,7 +172,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
    * Sets the value of the 'paymentStatus' field.
    * @param value the value to set.
    */
-  public void setPaymentStatus(com.emi.events.PaymentStatus value) {
+  public void setPaymentStatus(com.emi.events.payment.PaymentStatus value) {
     this.paymentStatus = value;
   }
 
@@ -179,8 +180,8 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
    * Creates a new PaymentGeneratedEvent RecordBuilder.
    * @return A new PaymentGeneratedEvent RecordBuilder
    */
-  public static com.emi.events.PaymentGeneratedEvent.Builder newBuilder() {
-    return new com.emi.events.PaymentGeneratedEvent.Builder();
+  public static com.emi.events.payment.PaymentGeneratedEvent.Builder newBuilder() {
+    return new com.emi.events.payment.PaymentGeneratedEvent.Builder();
   }
 
   /**
@@ -188,11 +189,11 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
    * @param other The existing builder to copy.
    * @return A new PaymentGeneratedEvent RecordBuilder
    */
-  public static com.emi.events.PaymentGeneratedEvent.Builder newBuilder(com.emi.events.PaymentGeneratedEvent.Builder other) {
+  public static com.emi.events.payment.PaymentGeneratedEvent.Builder newBuilder(com.emi.events.payment.PaymentGeneratedEvent.Builder other) {
     if (other == null) {
-      return new com.emi.events.PaymentGeneratedEvent.Builder();
+      return new com.emi.events.payment.PaymentGeneratedEvent.Builder();
     } else {
-      return new com.emi.events.PaymentGeneratedEvent.Builder(other);
+      return new com.emi.events.payment.PaymentGeneratedEvent.Builder(other);
     }
   }
 
@@ -201,11 +202,11 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
    * @param other The existing instance to copy.
    * @return A new PaymentGeneratedEvent RecordBuilder
    */
-  public static com.emi.events.PaymentGeneratedEvent.Builder newBuilder(com.emi.events.PaymentGeneratedEvent other) {
+  public static com.emi.events.payment.PaymentGeneratedEvent.Builder newBuilder(com.emi.events.payment.PaymentGeneratedEvent other) {
     if (other == null) {
-      return new com.emi.events.PaymentGeneratedEvent.Builder();
+      return new com.emi.events.payment.PaymentGeneratedEvent.Builder();
     } else {
-      return new com.emi.events.PaymentGeneratedEvent.Builder(other);
+      return new com.emi.events.payment.PaymentGeneratedEvent.Builder(other);
     }
   }
 
@@ -218,7 +219,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
 
     private java.lang.CharSequence orderId;
     private java.lang.CharSequence paymentId;
-    private com.emi.events.PaymentStatus paymentStatus;
+    private com.emi.events.payment.PaymentStatus paymentStatus;
 
     /** Creates a new Builder */
     private Builder() {
@@ -229,7 +230,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.emi.events.PaymentGeneratedEvent.Builder other) {
+    private Builder(com.emi.events.payment.PaymentGeneratedEvent.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.orderId)) {
         this.orderId = data().deepCopy(fields()[0].schema(), other.orderId);
@@ -249,7 +250,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
      * Creates a Builder by copying an existing PaymentGeneratedEvent instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.emi.events.PaymentGeneratedEvent other) {
+    private Builder(com.emi.events.payment.PaymentGeneratedEvent other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.orderId)) {
         this.orderId = data().deepCopy(fields()[0].schema(), other.orderId);
@@ -279,7 +280,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
       * @param value The value of 'orderId'.
       * @return This builder.
       */
-    public com.emi.events.PaymentGeneratedEvent.Builder setOrderId(java.lang.CharSequence value) {
+    public com.emi.events.payment.PaymentGeneratedEvent.Builder setOrderId(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.orderId = value;
       fieldSetFlags()[0] = true;
@@ -299,7 +300,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
       * Clears the value of the 'orderId' field.
       * @return This builder.
       */
-    public com.emi.events.PaymentGeneratedEvent.Builder clearOrderId() {
+    public com.emi.events.payment.PaymentGeneratedEvent.Builder clearOrderId() {
       orderId = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -319,7 +320,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
       * @param value The value of 'paymentId'.
       * @return This builder.
       */
-    public com.emi.events.PaymentGeneratedEvent.Builder setPaymentId(java.lang.CharSequence value) {
+    public com.emi.events.payment.PaymentGeneratedEvent.Builder setPaymentId(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.paymentId = value;
       fieldSetFlags()[1] = true;
@@ -339,7 +340,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
       * Clears the value of the 'paymentId' field.
       * @return This builder.
       */
-    public com.emi.events.PaymentGeneratedEvent.Builder clearPaymentId() {
+    public com.emi.events.payment.PaymentGeneratedEvent.Builder clearPaymentId() {
       paymentId = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -349,7 +350,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
       * Gets the value of the 'paymentStatus' field.
       * @return The value.
       */
-    public com.emi.events.PaymentStatus getPaymentStatus() {
+    public com.emi.events.payment.PaymentStatus getPaymentStatus() {
       return paymentStatus;
     }
 
@@ -359,7 +360,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
       * @param value The value of 'paymentStatus'.
       * @return This builder.
       */
-    public com.emi.events.PaymentGeneratedEvent.Builder setPaymentStatus(com.emi.events.PaymentStatus value) {
+    public com.emi.events.payment.PaymentGeneratedEvent.Builder setPaymentStatus(com.emi.events.payment.PaymentStatus value) {
       validate(fields()[2], value);
       this.paymentStatus = value;
       fieldSetFlags()[2] = true;
@@ -379,7 +380,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
       * Clears the value of the 'paymentStatus' field.
       * @return This builder.
       */
-    public com.emi.events.PaymentGeneratedEvent.Builder clearPaymentStatus() {
+    public com.emi.events.payment.PaymentGeneratedEvent.Builder clearPaymentStatus() {
       paymentStatus = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -392,7 +393,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
         PaymentGeneratedEvent record = new PaymentGeneratedEvent();
         record.orderId = fieldSetFlags()[0] ? this.orderId : (java.lang.CharSequence) defaultValue(fields()[0]);
         record.paymentId = fieldSetFlags()[1] ? this.paymentId : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.paymentStatus = fieldSetFlags()[2] ? this.paymentStatus : (com.emi.events.PaymentStatus) defaultValue(fields()[2]);
+        record.paymentStatus = fieldSetFlags()[2] ? this.paymentStatus : (com.emi.events.payment.PaymentStatus) defaultValue(fields()[2]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -452,7 +453,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
         in.readNull();
         this.paymentStatus = null;
       } else {
-        this.paymentStatus = com.emi.events.PaymentStatus.values()[in.readEnum()];
+        this.paymentStatus = com.emi.events.payment.PaymentStatus.values()[in.readEnum()];
       }
 
     } else {
@@ -471,7 +472,7 @@ public class PaymentGeneratedEvent extends org.apache.avro.specific.SpecificReco
             in.readNull();
             this.paymentStatus = null;
           } else {
-            this.paymentStatus = com.emi.events.PaymentStatus.values()[in.readEnum()];
+            this.paymentStatus = com.emi.events.payment.PaymentStatus.values()[in.readEnum()];
           }
           break;
 

@@ -3,11 +3,11 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.emi.events;
+package com.emi.events.bookPublished;
 @org.apache.avro.specific.AvroGenerated
 public enum BookLifeCycleStatus implements org.apache.avro.generic.GenericEnumSymbol<BookLifeCycleStatus> {
   DRAFT, ONGOING, COMPLETED  ;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"BookLifeCycleStatus\",\"namespace\":\"com.emi.events\",\"symbols\":[\"DRAFT\",\"ONGOING\",\"COMPLETED\"]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"BookLifeCycleStatus\",\"namespace\":\"com.emi.events.bookPublished\",\"symbols\":[\"DRAFT\",\"ONGOING\",\"COMPLETED\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   @Override

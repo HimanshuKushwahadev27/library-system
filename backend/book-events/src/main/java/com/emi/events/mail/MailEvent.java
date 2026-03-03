@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.emi.events;
+package com.emi.events.mail;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class MailEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 2632599795792750458L;
+  private static final long serialVersionUID = 324827933650422975L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MailEvent\",\"namespace\":\"com.emi.events\",\"fields\":[{\"name\":\"firstName\",\"type\":\"string\"},{\"name\":\"lastName\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"orderType\",\"type\":\"string\"},{\"name\":\"orderTypeTitle\",\"type\":\"string\"},{\"name\":\"price\",\"type\":\"double\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MailEvent\",\"namespace\":\"com.emi.events.mail\",\"fields\":[{\"name\":\"firstName\",\"type\":\"string\"},{\"name\":\"lastName\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"orderType\",\"type\":\"string\"},{\"name\":\"orderTypeTitle\",\"type\":\"string\"},{\"name\":\"price\",\"type\":\"double\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -246,8 +246,8 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
    * Creates a new MailEvent RecordBuilder.
    * @return A new MailEvent RecordBuilder
    */
-  public static com.emi.events.MailEvent.Builder newBuilder() {
-    return new com.emi.events.MailEvent.Builder();
+  public static com.emi.events.mail.MailEvent.Builder newBuilder() {
+    return new com.emi.events.mail.MailEvent.Builder();
   }
 
   /**
@@ -255,11 +255,11 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
    * @param other The existing builder to copy.
    * @return A new MailEvent RecordBuilder
    */
-  public static com.emi.events.MailEvent.Builder newBuilder(com.emi.events.MailEvent.Builder other) {
+  public static com.emi.events.mail.MailEvent.Builder newBuilder(com.emi.events.mail.MailEvent.Builder other) {
     if (other == null) {
-      return new com.emi.events.MailEvent.Builder();
+      return new com.emi.events.mail.MailEvent.Builder();
     } else {
-      return new com.emi.events.MailEvent.Builder(other);
+      return new com.emi.events.mail.MailEvent.Builder(other);
     }
   }
 
@@ -268,11 +268,11 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
    * @param other The existing instance to copy.
    * @return A new MailEvent RecordBuilder
    */
-  public static com.emi.events.MailEvent.Builder newBuilder(com.emi.events.MailEvent other) {
+  public static com.emi.events.mail.MailEvent.Builder newBuilder(com.emi.events.mail.MailEvent other) {
     if (other == null) {
-      return new com.emi.events.MailEvent.Builder();
+      return new com.emi.events.mail.MailEvent.Builder();
     } else {
-      return new com.emi.events.MailEvent.Builder(other);
+      return new com.emi.events.mail.MailEvent.Builder(other);
     }
   }
 
@@ -299,7 +299,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.emi.events.MailEvent.Builder other) {
+    private Builder(com.emi.events.mail.MailEvent.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.firstName)) {
         this.firstName = data().deepCopy(fields()[0].schema(), other.firstName);
@@ -331,7 +331,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
      * Creates a Builder by copying an existing MailEvent instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.emi.events.MailEvent other) {
+    private Builder(com.emi.events.mail.MailEvent other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.firstName)) {
         this.firstName = data().deepCopy(fields()[0].schema(), other.firstName);
@@ -373,7 +373,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'firstName'.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder setFirstName(java.lang.CharSequence value) {
+    public com.emi.events.mail.MailEvent.Builder setFirstName(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.firstName = value;
       fieldSetFlags()[0] = true;
@@ -393,7 +393,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'firstName' field.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder clearFirstName() {
+    public com.emi.events.mail.MailEvent.Builder clearFirstName() {
       firstName = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -413,7 +413,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'lastName'.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder setLastName(java.lang.CharSequence value) {
+    public com.emi.events.mail.MailEvent.Builder setLastName(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.lastName = value;
       fieldSetFlags()[1] = true;
@@ -433,7 +433,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'lastName' field.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder clearLastName() {
+    public com.emi.events.mail.MailEvent.Builder clearLastName() {
       lastName = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -453,7 +453,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'email'.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder setEmail(java.lang.CharSequence value) {
+    public com.emi.events.mail.MailEvent.Builder setEmail(java.lang.CharSequence value) {
       validate(fields()[2], value);
       this.email = value;
       fieldSetFlags()[2] = true;
@@ -473,7 +473,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'email' field.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder clearEmail() {
+    public com.emi.events.mail.MailEvent.Builder clearEmail() {
       email = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -493,7 +493,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'orderType'.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder setOrderType(java.lang.CharSequence value) {
+    public com.emi.events.mail.MailEvent.Builder setOrderType(java.lang.CharSequence value) {
       validate(fields()[3], value);
       this.orderType = value;
       fieldSetFlags()[3] = true;
@@ -513,7 +513,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'orderType' field.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder clearOrderType() {
+    public com.emi.events.mail.MailEvent.Builder clearOrderType() {
       orderType = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -533,7 +533,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'orderTypeTitle'.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder setOrderTypeTitle(java.lang.CharSequence value) {
+    public com.emi.events.mail.MailEvent.Builder setOrderTypeTitle(java.lang.CharSequence value) {
       validate(fields()[4], value);
       this.orderTypeTitle = value;
       fieldSetFlags()[4] = true;
@@ -553,7 +553,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'orderTypeTitle' field.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder clearOrderTypeTitle() {
+    public com.emi.events.mail.MailEvent.Builder clearOrderTypeTitle() {
       orderTypeTitle = null;
       fieldSetFlags()[4] = false;
       return this;
@@ -573,7 +573,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'price'.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder setPrice(double value) {
+    public com.emi.events.mail.MailEvent.Builder setPrice(double value) {
       validate(fields()[5], value);
       this.price = value;
       fieldSetFlags()[5] = true;
@@ -593,7 +593,7 @@ public class MailEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'price' field.
       * @return This builder.
       */
-    public com.emi.events.MailEvent.Builder clearPrice() {
+    public com.emi.events.mail.MailEvent.Builder clearPrice() {
       fieldSetFlags()[5] = false;
       return this;
     }

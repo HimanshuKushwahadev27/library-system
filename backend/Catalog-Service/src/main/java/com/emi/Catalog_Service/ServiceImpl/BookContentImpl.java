@@ -10,7 +10,9 @@ import com.emi.Catalog_Service.Entity.Book;
 import com.emi.Catalog_Service.Entity.Book_Content;
 import com.emi.Catalog_Service.Repository.BookContentRepo;
 import com.emi.Catalog_Service.Repository.BookRepository;
+import com.emi.Catalog_Service.Repository.CatalogOwnershipRepo;
 import com.emi.Catalog_Service.RequestDtos.RequestCreateContentDto;
+import com.emi.Catalog_Service.ResponseDtos.CatalogPriceResponse;
 import com.emi.Catalog_Service.ResponseDtos.ResponseContentDto;
 import com.emi.Catalog_Service.Services.BookContentService;
 import com.emi.Catalog_Service.enums.BookVisibilityStatus;
@@ -27,7 +29,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class BookContentImpl implements BookContentService {
-
+	
+	private final CatalogOwnershipRepo ownershipRepo;
 	private final ContentMapper contentMapper;
 	private final BookContentRepo contentRepo;
 	private final BookRepository bookRepo;
@@ -71,7 +74,15 @@ public class BookContentImpl implements BookContentService {
 	}
 
 	@Override
-	public ResponseContentDto getBookContentByContentId(UUID contentId) {
+	public ResponseContentDto getBookContentByContentId(UUID contentId, UUID keycloakId) {
+		
+		boolean hasAccess =
+			    ownershipRepo.existsByUserKeycloakIdAndChapterId(keycloakId, contentId);
+		
+		if(!hasAccess) {
+			throw new NotAuthorizedException("You havent purchased this book yet");
+		}
+		
 		Book_Content content = contentRepo.findById(contentId)
 				.orElseThrow(() -> new ContentNotFoundException("Content not found with id: " + contentId));
 		
@@ -95,16 +106,25 @@ public class BookContentImpl implements BookContentService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<ResponseContentDto> getBookContentsByContentIds(List<UUID> contentIds) {
+	public List<ResponseContentDto> getBookContentsByContentIds(List<UUID> contentIds, UUID keycloakId) {
+		
 		List<ResponseContentDto> contents = contentIds.stream()
-				.map(this::getBookContentByContentId)
+				.map(t -> this.getBookContentByContentId(t, keycloakId))
 				.toList();
 		return contents;
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<ResponseContentDto> getBookContentByBookId(UUID bookId) {
+	public List<ResponseContentDto> getBookContentByBookId(UUID bookId, UUID keycloakId) {
+		
+		boolean hasAccess =
+			    ownershipRepo.existsByUserKeycloakIdAndBookId(keycloakId, bookId);
+		
+		if(!hasAccess) {
+			throw new NotAuthorizedException("You havent purchased this book yet");
+		}
+		
 		
 		if(!bookRepo.existsById(bookId)) {
 			throw new BookNotFoundException("Book not found with id: " + bookId);
@@ -177,6 +197,34 @@ public class BookContentImpl implements BookContentService {
 		});
 		
 		return "All contents deleted successfully for book with id: " + bookId;
+	}
+
+	@Override
+	public CatalogPriceResponse getBookContentPriceInternal(UUID bookId, UUID contentId) {
+		
+		Book_Content content = contentRepo.findById(contentId)
+				.orElseThrow(() -> new ContentNotFoundException("Content not found with id: " + contentId));
+		
+		if(bookRepo.existsById(content.getBookId())==false) {
+			throw new BookNotFoundException("Book not found for content with id: " + contentId);
+		}
+		
+		Book book = bookRepo.findById(content.getBookId()).orElseThrow(() -> 
+			new BookNotFoundException("Book not found for content with id: " + contentId));
+		
+		if(!book.getStatusVisible().equals(BookVisibilityStatus.PUBLIC)) {
+			throw new BookDeletedException("Book for the contentID " + contentId + " is not PUBLIC.");
+		}
+		
+		if(content.isDeleted()) {
+			throw new ContentDeletedException("Content not found with id: " + contentId);
+		}
+		
+		return new CatalogPriceResponse(
+				book.getId(),
+				List.of(content.getId()),
+				content.getPrice()
+				);
 	}
 
 }

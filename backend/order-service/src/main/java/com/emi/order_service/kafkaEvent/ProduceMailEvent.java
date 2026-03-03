@@ -3,7 +3,7 @@ package com.emi.order_service.kafkaEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.emi.events.MailEvent;
+import com.emi.events.mail.MailEvent;
 
 import lombok.RequiredArgsConstructor;
 

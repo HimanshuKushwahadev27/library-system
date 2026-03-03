@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.emi.events;
+package com.emi.events.bookPublished;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 6411674272843254709L;
+  private static final long serialVersionUID = -1678021546606132609L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BookPublishedEvent\",\"namespace\":\"com.emi.events\",\"fields\":[{\"name\":\"bookId\",\"type\":\"string\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"},{\"name\":\"price\",\"type\":\"double\"},{\"name\":\"authorNames\",\"type\":{\"type\":\"array\",\"items\":\"string\"}},{\"name\":\"genres\",\"type\":{\"type\":\"array\",\"items\":\"string\"}},{\"name\":\"freePreviewAvailable\",\"type\":\"boolean\"},{\"name\":\"lifeCycleStatus\",\"type\":{\"type\":\"enum\",\"name\":\"BookLifeCycleStatus\",\"symbols\":[\"DRAFT\",\"ONGOING\",\"COMPLETED\"]}},{\"name\":\"visibilityStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"BookVisibilityStatus\",\"symbols\":[\"PRIVATE\",\"PUBLIC\",\"DELETE\"]}],\"default\":null},{\"name\":\"publishedAt\",\"type\":\"long\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BookPublishedEvent\",\"namespace\":\"com.emi.events.bookPublished\",\"fields\":[{\"name\":\"bookId\",\"type\":\"string\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"},{\"name\":\"price\",\"type\":\"double\"},{\"name\":\"authorNames\",\"type\":{\"type\":\"array\",\"items\":\"string\"}},{\"name\":\"genres\",\"type\":{\"type\":\"array\",\"items\":\"string\"}},{\"name\":\"freePreviewAvailable\",\"type\":\"boolean\"},{\"name\":\"lifeCycleStatus\",\"type\":{\"type\":\"enum\",\"name\":\"BookLifeCycleStatus\",\"symbols\":[\"DRAFT\",\"ONGOING\",\"COMPLETED\"]}},{\"name\":\"visibilityStatus\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"BookVisibilityStatus\",\"symbols\":[\"PRIVATE\",\"PUBLIC\",\"DELETE\"]}],\"default\":null},{\"name\":\"publishedAt\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -80,8 +80,8 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
   private java.util.List<java.lang.CharSequence> authorNames;
   private java.util.List<java.lang.CharSequence> genres;
   private boolean freePreviewAvailable;
-  private com.emi.events.BookLifeCycleStatus lifeCycleStatus;
-  private com.emi.events.BookVisibilityStatus visibilityStatus;
+  private com.emi.events.bookPublished.BookLifeCycleStatus lifeCycleStatus;
+  private com.emi.events.bookPublished.BookVisibilityStatus visibilityStatus;
   private long publishedAt;
 
   /**
@@ -104,7 +104,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * @param visibilityStatus The new value for visibilityStatus
    * @param publishedAt The new value for publishedAt
    */
-  public BookPublishedEvent(java.lang.CharSequence bookId, java.lang.CharSequence title, java.lang.CharSequence description, java.lang.Double price, java.util.List<java.lang.CharSequence> authorNames, java.util.List<java.lang.CharSequence> genres, java.lang.Boolean freePreviewAvailable, com.emi.events.BookLifeCycleStatus lifeCycleStatus, com.emi.events.BookVisibilityStatus visibilityStatus, java.lang.Long publishedAt) {
+  public BookPublishedEvent(java.lang.CharSequence bookId, java.lang.CharSequence title, java.lang.CharSequence description, java.lang.Double price, java.util.List<java.lang.CharSequence> authorNames, java.util.List<java.lang.CharSequence> genres, java.lang.Boolean freePreviewAvailable, com.emi.events.bookPublished.BookLifeCycleStatus lifeCycleStatus, com.emi.events.bookPublished.BookVisibilityStatus visibilityStatus, java.lang.Long publishedAt) {
     this.bookId = bookId;
     this.title = title;
     this.description = description;
@@ -153,8 +153,8 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
     case 4: authorNames = (java.util.List<java.lang.CharSequence>)value$; break;
     case 5: genres = (java.util.List<java.lang.CharSequence>)value$; break;
     case 6: freePreviewAvailable = (java.lang.Boolean)value$; break;
-    case 7: lifeCycleStatus = (com.emi.events.BookLifeCycleStatus)value$; break;
-    case 8: visibilityStatus = (com.emi.events.BookVisibilityStatus)value$; break;
+    case 7: lifeCycleStatus = (com.emi.events.bookPublished.BookLifeCycleStatus)value$; break;
+    case 8: visibilityStatus = (com.emi.events.bookPublished.BookVisibilityStatus)value$; break;
     case 9: publishedAt = (java.lang.Long)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -283,7 +283,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * Gets the value of the 'lifeCycleStatus' field.
    * @return The value of the 'lifeCycleStatus' field.
    */
-  public com.emi.events.BookLifeCycleStatus getLifeCycleStatus() {
+  public com.emi.events.bookPublished.BookLifeCycleStatus getLifeCycleStatus() {
     return lifeCycleStatus;
   }
 
@@ -292,7 +292,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * Sets the value of the 'lifeCycleStatus' field.
    * @param value the value to set.
    */
-  public void setLifeCycleStatus(com.emi.events.BookLifeCycleStatus value) {
+  public void setLifeCycleStatus(com.emi.events.bookPublished.BookLifeCycleStatus value) {
     this.lifeCycleStatus = value;
   }
 
@@ -300,7 +300,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * Gets the value of the 'visibilityStatus' field.
    * @return The value of the 'visibilityStatus' field.
    */
-  public com.emi.events.BookVisibilityStatus getVisibilityStatus() {
+  public com.emi.events.bookPublished.BookVisibilityStatus getVisibilityStatus() {
     return visibilityStatus;
   }
 
@@ -309,7 +309,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * Sets the value of the 'visibilityStatus' field.
    * @param value the value to set.
    */
-  public void setVisibilityStatus(com.emi.events.BookVisibilityStatus value) {
+  public void setVisibilityStatus(com.emi.events.bookPublished.BookVisibilityStatus value) {
     this.visibilityStatus = value;
   }
 
@@ -334,8 +334,8 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * Creates a new BookPublishedEvent RecordBuilder.
    * @return A new BookPublishedEvent RecordBuilder
    */
-  public static com.emi.events.BookPublishedEvent.Builder newBuilder() {
-    return new com.emi.events.BookPublishedEvent.Builder();
+  public static com.emi.events.bookPublished.BookPublishedEvent.Builder newBuilder() {
+    return new com.emi.events.bookPublished.BookPublishedEvent.Builder();
   }
 
   /**
@@ -343,11 +343,11 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * @param other The existing builder to copy.
    * @return A new BookPublishedEvent RecordBuilder
    */
-  public static com.emi.events.BookPublishedEvent.Builder newBuilder(com.emi.events.BookPublishedEvent.Builder other) {
+  public static com.emi.events.bookPublished.BookPublishedEvent.Builder newBuilder(com.emi.events.bookPublished.BookPublishedEvent.Builder other) {
     if (other == null) {
-      return new com.emi.events.BookPublishedEvent.Builder();
+      return new com.emi.events.bookPublished.BookPublishedEvent.Builder();
     } else {
-      return new com.emi.events.BookPublishedEvent.Builder(other);
+      return new com.emi.events.bookPublished.BookPublishedEvent.Builder(other);
     }
   }
 
@@ -356,11 +356,11 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
    * @param other The existing instance to copy.
    * @return A new BookPublishedEvent RecordBuilder
    */
-  public static com.emi.events.BookPublishedEvent.Builder newBuilder(com.emi.events.BookPublishedEvent other) {
+  public static com.emi.events.bookPublished.BookPublishedEvent.Builder newBuilder(com.emi.events.bookPublished.BookPublishedEvent other) {
     if (other == null) {
-      return new com.emi.events.BookPublishedEvent.Builder();
+      return new com.emi.events.bookPublished.BookPublishedEvent.Builder();
     } else {
-      return new com.emi.events.BookPublishedEvent.Builder(other);
+      return new com.emi.events.bookPublished.BookPublishedEvent.Builder(other);
     }
   }
 
@@ -378,8 +378,8 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
     private java.util.List<java.lang.CharSequence> authorNames;
     private java.util.List<java.lang.CharSequence> genres;
     private boolean freePreviewAvailable;
-    private com.emi.events.BookLifeCycleStatus lifeCycleStatus;
-    private com.emi.events.BookVisibilityStatus visibilityStatus;
+    private com.emi.events.bookPublished.BookLifeCycleStatus lifeCycleStatus;
+    private com.emi.events.bookPublished.BookVisibilityStatus visibilityStatus;
     private long publishedAt;
 
     /** Creates a new Builder */
@@ -391,7 +391,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.emi.events.BookPublishedEvent.Builder other) {
+    private Builder(com.emi.events.bookPublished.BookPublishedEvent.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.bookId)) {
         this.bookId = data().deepCopy(fields()[0].schema(), other.bookId);
@@ -439,7 +439,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
      * Creates a Builder by copying an existing BookPublishedEvent instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.emi.events.BookPublishedEvent other) {
+    private Builder(com.emi.events.bookPublished.BookPublishedEvent other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.bookId)) {
         this.bookId = data().deepCopy(fields()[0].schema(), other.bookId);
@@ -497,7 +497,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'bookId'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setBookId(java.lang.CharSequence value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setBookId(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.bookId = value;
       fieldSetFlags()[0] = true;
@@ -517,7 +517,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'bookId' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearBookId() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearBookId() {
       bookId = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -537,7 +537,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'title'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setTitle(java.lang.CharSequence value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setTitle(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.title = value;
       fieldSetFlags()[1] = true;
@@ -557,7 +557,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'title' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearTitle() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearTitle() {
       title = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -577,7 +577,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'description'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setDescription(java.lang.CharSequence value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setDescription(java.lang.CharSequence value) {
       validate(fields()[2], value);
       this.description = value;
       fieldSetFlags()[2] = true;
@@ -597,7 +597,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'description' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearDescription() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearDescription() {
       description = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -617,7 +617,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'price'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setPrice(double value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setPrice(double value) {
       validate(fields()[3], value);
       this.price = value;
       fieldSetFlags()[3] = true;
@@ -637,7 +637,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'price' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearPrice() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearPrice() {
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -656,7 +656,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'authorNames'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setAuthorNames(java.util.List<java.lang.CharSequence> value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setAuthorNames(java.util.List<java.lang.CharSequence> value) {
       validate(fields()[4], value);
       this.authorNames = value;
       fieldSetFlags()[4] = true;
@@ -676,7 +676,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'authorNames' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearAuthorNames() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearAuthorNames() {
       authorNames = null;
       fieldSetFlags()[4] = false;
       return this;
@@ -696,7 +696,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'genres'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setGenres(java.util.List<java.lang.CharSequence> value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setGenres(java.util.List<java.lang.CharSequence> value) {
       validate(fields()[5], value);
       this.genres = value;
       fieldSetFlags()[5] = true;
@@ -716,7 +716,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'genres' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearGenres() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearGenres() {
       genres = null;
       fieldSetFlags()[5] = false;
       return this;
@@ -736,7 +736,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'freePreviewAvailable'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setFreePreviewAvailable(boolean value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setFreePreviewAvailable(boolean value) {
       validate(fields()[6], value);
       this.freePreviewAvailable = value;
       fieldSetFlags()[6] = true;
@@ -756,7 +756,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'freePreviewAvailable' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearFreePreviewAvailable() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearFreePreviewAvailable() {
       fieldSetFlags()[6] = false;
       return this;
     }
@@ -765,7 +765,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Gets the value of the 'lifeCycleStatus' field.
       * @return The value.
       */
-    public com.emi.events.BookLifeCycleStatus getLifeCycleStatus() {
+    public com.emi.events.bookPublished.BookLifeCycleStatus getLifeCycleStatus() {
       return lifeCycleStatus;
     }
 
@@ -775,7 +775,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'lifeCycleStatus'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setLifeCycleStatus(com.emi.events.BookLifeCycleStatus value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setLifeCycleStatus(com.emi.events.bookPublished.BookLifeCycleStatus value) {
       validate(fields()[7], value);
       this.lifeCycleStatus = value;
       fieldSetFlags()[7] = true;
@@ -795,7 +795,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'lifeCycleStatus' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearLifeCycleStatus() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearLifeCycleStatus() {
       lifeCycleStatus = null;
       fieldSetFlags()[7] = false;
       return this;
@@ -805,7 +805,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Gets the value of the 'visibilityStatus' field.
       * @return The value.
       */
-    public com.emi.events.BookVisibilityStatus getVisibilityStatus() {
+    public com.emi.events.bookPublished.BookVisibilityStatus getVisibilityStatus() {
       return visibilityStatus;
     }
 
@@ -815,7 +815,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'visibilityStatus'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setVisibilityStatus(com.emi.events.BookVisibilityStatus value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setVisibilityStatus(com.emi.events.bookPublished.BookVisibilityStatus value) {
       validate(fields()[8], value);
       this.visibilityStatus = value;
       fieldSetFlags()[8] = true;
@@ -835,7 +835,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'visibilityStatus' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearVisibilityStatus() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearVisibilityStatus() {
       visibilityStatus = null;
       fieldSetFlags()[8] = false;
       return this;
@@ -855,7 +855,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'publishedAt'.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder setPublishedAt(long value) {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder setPublishedAt(long value) {
       validate(fields()[9], value);
       this.publishedAt = value;
       fieldSetFlags()[9] = true;
@@ -875,7 +875,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'publishedAt' field.
       * @return This builder.
       */
-    public com.emi.events.BookPublishedEvent.Builder clearPublishedAt() {
+    public com.emi.events.bookPublished.BookPublishedEvent.Builder clearPublishedAt() {
       fieldSetFlags()[9] = false;
       return this;
     }
@@ -892,8 +892,8 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
         record.authorNames = fieldSetFlags()[4] ? this.authorNames : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[4]);
         record.genres = fieldSetFlags()[5] ? this.genres : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[5]);
         record.freePreviewAvailable = fieldSetFlags()[6] ? this.freePreviewAvailable : (java.lang.Boolean) defaultValue(fields()[6]);
-        record.lifeCycleStatus = fieldSetFlags()[7] ? this.lifeCycleStatus : (com.emi.events.BookLifeCycleStatus) defaultValue(fields()[7]);
-        record.visibilityStatus = fieldSetFlags()[8] ? this.visibilityStatus : (com.emi.events.BookVisibilityStatus) defaultValue(fields()[8]);
+        record.lifeCycleStatus = fieldSetFlags()[7] ? this.lifeCycleStatus : (com.emi.events.bookPublished.BookLifeCycleStatus) defaultValue(fields()[7]);
+        record.visibilityStatus = fieldSetFlags()[8] ? this.visibilityStatus : (com.emi.events.bookPublished.BookVisibilityStatus) defaultValue(fields()[8]);
         record.publishedAt = fieldSetFlags()[9] ? this.publishedAt : (java.lang.Long) defaultValue(fields()[9]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
@@ -1022,13 +1022,13 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
 
       this.freePreviewAvailable = in.readBoolean();
 
-      this.lifeCycleStatus = com.emi.events.BookLifeCycleStatus.values()[in.readEnum()];
+      this.lifeCycleStatus = com.emi.events.bookPublished.BookLifeCycleStatus.values()[in.readEnum()];
 
       if (in.readIndex() != 1) {
         in.readNull();
         this.visibilityStatus = null;
       } else {
-        this.visibilityStatus = com.emi.events.BookVisibilityStatus.values()[in.readEnum()];
+        this.visibilityStatus = com.emi.events.bookPublished.BookVisibilityStatus.values()[in.readEnum()];
       }
 
       this.publishedAt = in.readLong();
@@ -1091,7 +1091,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
           break;
 
         case 7:
-          this.lifeCycleStatus = com.emi.events.BookLifeCycleStatus.values()[in.readEnum()];
+          this.lifeCycleStatus = com.emi.events.bookPublished.BookLifeCycleStatus.values()[in.readEnum()];
           break;
 
         case 8:
@@ -1099,7 +1099,7 @@ public class BookPublishedEvent extends org.apache.avro.specific.SpecificRecordB
             in.readNull();
             this.visibilityStatus = null;
           } else {
-            this.visibilityStatus = com.emi.events.BookVisibilityStatus.values()[in.readEnum()];
+            this.visibilityStatus = com.emi.events.bookPublished.BookVisibilityStatus.values()[in.readEnum()];
           }
           break;
 

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.emi.Catalog_Service.Entity.Book_Content;
 import com.emi.Catalog_Service.RequestDtos.RequestCreateContentDto;
+import com.emi.Catalog_Service.ResponseDtos.CatalogPriceResponse;
 import com.emi.Catalog_Service.ResponseDtos.ResponseContentDto;
 
 @Component
@@ -39,5 +40,7 @@ public class ContentMapper {
 				content.getStatus().toString()
 		);
 	}
+	
+
 
 }

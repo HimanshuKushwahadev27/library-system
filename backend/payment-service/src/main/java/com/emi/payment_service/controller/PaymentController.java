@@ -3,6 +3,8 @@ package com.emi.payment_service.controller;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +29,13 @@ public class PaymentController {
 	@PostMapping("/create")
 	public ResponseEntity<ResponsePaymentDto> create(
 			@RequestBody RequestPaymentDto request,
-			@RequestHeader("X-User-Id") String keycloakId,
+			@AuthenticationPrincipal Jwt jwt,
 			@RequestHeader("Idempotency-Key") String IdempotencyKey
 			) {
 		return ResponseEntity.ok(
 				paymentService
 				.create(
-						request, UUID.fromString(IdempotencyKey), UUID.fromString(keycloakId))
+						request, UUID.fromString(IdempotencyKey), UUID.fromString(jwt.getSubject()))
 				);
 	}
 	

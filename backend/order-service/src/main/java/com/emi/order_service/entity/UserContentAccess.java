@@ -4,7 +4,7 @@ package com.emi.order_service.entity;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.emi.order_service.enums.OrderType;
+import com.emi.events.catalog.OrderType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -10,9 +10,11 @@ import com.emi.Catalog_Service.Entity.Book;
 import com.emi.Catalog_Service.Entity.Genre;
 import com.emi.Catalog_Service.Repository.BookContentRepo;
 import com.emi.Catalog_Service.Repository.BookRepository;
+import com.emi.Catalog_Service.Repository.CatalogOwnershipRepo;
 import com.emi.Catalog_Service.Repository.GenreRepo;
 import com.emi.Catalog_Service.RequestDtos.RequestBookCreationDto;
 import com.emi.Catalog_Service.RequestDtos.RequsestBookUpdateDto;
+import com.emi.Catalog_Service.ResponseDtos.CatalogPriceResponse;
 import com.emi.Catalog_Service.ResponseDtos.ResponseBookDto;
 import com.emi.Catalog_Service.ResponseDtos.ResponseFullBookDto;
 import com.emi.Catalog_Service.Services.BookContentService;
@@ -22,12 +24,13 @@ import com.emi.Catalog_Service.exception.BookDeletedException;
 import com.emi.Catalog_Service.exception.BookNotFoundException;
 import com.emi.Catalog_Service.exception.GenreNotFoundException;
 import com.emi.Catalog_Service.exception.NotAuthorizedException;
+import com.emi.Catalog_Service.kafka.CatalogProducerService;
 import com.emi.Catalog_Service.mapper.AuthorSnapshotMapper;
 import com.emi.Catalog_Service.mapper.BookMapper;
 import com.emi.Catalog_Service.mapper.GenreSnapshotMapper;
-import com.emi.events.BookDeletedEvent;
-import com.emi.events.BookPublishedEvent;
-import com.emi.events.BookUpdatedEvent;
+import com.emi.events.book.BookDeletedEvent;
+import com.emi.events.bookPublished.BookPublishedEvent;
+import com.emi.events.bookUpdate.BookUpdatedEvent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-
+	
+	private final CatalogOwnershipRepo ownershipRepo;
 	private final CatalogProducerService catalogProducerService;
 	private final BookContentService contentService;
 	private final BookContentRepo contentRepo;
@@ -80,7 +84,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public ResponseFullBookDto getBookById(UUID bookId) {
+	public ResponseFullBookDto getBookById(UUID bookId, UUID keycloakId) {
+		
+		boolean hasAccess =
+			    ownershipRepo.existsByUserKeycloakIdAndBookId(keycloakId, bookId);
+		
+		if(!hasAccess) {
+			throw new NotAuthorizedException("You havent purchased this book yet");
+		}
+		
 		Book book = bookRepo
 				.findById(bookId)
 				.orElseThrow(
@@ -88,6 +100,10 @@ public class BookServiceImpl implements BookService {
 						);
 		if(book.isDeleted()) {
 			throw new BookDeletedException("Book with id: " + bookId + " has been deleted.");
+		}
+		
+		if(book.getStatusVisible().equals(BookVisibilityStatus.PRIVATE)) {
+			throw new IllegalStateException("Book is private with id _" +book.getId());
 		}
 		
 		List<UUID> chapterIds=contentRepo
@@ -100,10 +116,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<ResponseFullBookDto> getBookByIds(List<UUID> bookIds) {
+	public List<ResponseFullBookDto> getBookByIds(List<UUID> bookIds, UUID keyclokaId) {
+		
 	  		List<ResponseFullBookDto> books = bookIds
 				.stream()
-				.map(this::getBookById)
+				.map(t -> this.getBookById(t, keyclokaId))
 				.toList();
 		return books;
 	}
@@ -177,6 +194,31 @@ public class BookServiceImpl implements BookService {
 		BookDeletedEvent event = BookDeletedEvent.newBuilder().setBookId(book.getId().toString()).build();
 		catalogProducerService.sendBookDeletedEvent(event);
 		return "Book deleted successfully with id: " + bookId;
+	}
+
+	@Override
+	public CatalogPriceResponse getBookByIdInternal(UUID bookId) {
+		Book book = bookRepo
+				.findById(bookId)
+				.orElseThrow(
+						() -> new BookNotFoundException("Book not found with id: " + bookId)
+						);
+		
+		if(book.isDeleted()) {
+			throw new BookDeletedException("Book with id: " + bookId + " has been deleted.");
+		}
+		
+		if(book.getStatusVisible().equals(BookVisibilityStatus.PRIVATE)) {
+			throw new IllegalStateException("Book is private with id _" +book.getId());
+		}
+
+		List<UUID> chapterIds=contentRepo
+								.findAllByBookId(bookId)
+								.stream()
+								.map(content -> content.getId())
+								.toList();
+		
+		return bookMapper.toCatalogPriceResponse(book, chapterIds);
 	}
 
 }

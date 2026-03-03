@@ -8,7 +8,9 @@ import java.util.UUID;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.emi.events.MailEvent;
+import com.emi.events.catalog.ContentPurchasedEvent;
+import com.emi.events.catalog.OrderType;
+import com.emi.events.mail.MailEvent;
 import com.emi.order_service.RequestDto.OrderItemRequestDto;
 import com.emi.order_service.RequestDto.RequestOrderDto;
 import com.emi.order_service.ResponseDto.OrderHistoryDto;
@@ -21,10 +23,11 @@ import com.emi.order_service.entity.OrderStatusHistory;
 import com.emi.order_service.entity.UserContentAccess;
 import com.emi.order_service.enums.IdempotencyStatus;
 import com.emi.order_service.enums.OrderStatus;
-import com.emi.order_service.enums.OrderType;
 import com.emi.order_service.exceptions.OrderExistsException;
 import com.emi.order_service.exceptions.UnauthorizedAccessException;
+import com.emi.order_service.kafkaEvent.ProduceCatalogEvent;
 import com.emi.order_service.kafkaEvent.ProduceMailEvent;
+import com.emi.order_service.mapper.CatalogMapper;
 import com.emi.order_service.mapper.IdempotencyMapper;
 import com.emi.order_service.mapper.MailMapper;
 import com.emi.order_service.mapper.OrderItemMapper;
@@ -47,6 +50,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 	
+	private final CatalogMapper catalogMapper;
+	private final ProduceCatalogEvent produceCatalogEvent;
+	private final CatalogService catalogService;
 	private final ProduceMailEvent mailEvent;
 	private final MailMapper mailMapper;
 	private static final UUID SYSTEM_USER_ID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -94,11 +100,14 @@ public class OrderServiceImpl implements OrderService {
 
 			throw new IllegalStateException("Request already in progress");
 		}
-
+		
+		
+		this.validationOfRequest(request);
+		
 		Order order = orderMapper.getEntity(keycloakId, email, firstName, lastName);
 		orderRepo.save(order);
-
-		List<OrderItem> items = orderItemMapper.getEntities(request.items(), order.getId());
+		
+		List<OrderItem> items = orderItemMapper.getEntities(request,catalogService, order.getId());
 		items.stream().forEach(t -> orderItemRepo.save(t));
 
 		BigDecimal totalPrice = orderItemMapper.getTotalPrice(items);
@@ -114,6 +123,18 @@ public class OrderServiceImpl implements OrderService {
 		idempotencyRepo.save(idempotency);
 
 		return response;
+	}
+
+	private void validationOfRequest(RequestOrderDto request) {
+		boolean containsBook = request.items().stream()
+		        .anyMatch(i -> i.type() == OrderType.BOOK);
+
+		boolean containsChapter = request.items().stream()
+		        .anyMatch(i -> i.type() == OrderType.CONTENT);
+
+		if (containsBook && containsChapter) {
+		    throw new IllegalStateException("Cannot purchase full book and chapters together");
+		}		
 	}
 
 	@Override
@@ -188,6 +209,9 @@ public class OrderServiceImpl implements OrderService {
 		
 		MailEvent eventMail = mailMapper.getEvent(order, items.getFirst());
 
+		ContentPurchasedEvent event = catalogMapper.getEvent(order, items);
+		
+		produceCatalogEvent.orderSuccess(event);
 		mailEvent.sendEventMail(eventMail);
 	}
 
@@ -251,16 +275,16 @@ public class OrderServiceImpl implements OrderService {
 
 			if (item.type() == OrderType.BOOK) {
 
-				boolean ownBook = userContentRepo.existsByUserIdAndBookIdAndAccessType(userId, item.bookid(),
+				boolean ownBook = userContentRepo.existsByUserIdAndBookIdAndAccessType(userId, item.bookId(),
 						item.type());
 
 				if (ownBook) {
 					throw new IllegalStateException("Book already purchased");
 				}
 
-			} else if (item.type() == OrderType.CONTENTS) {
+			} else if (item.type() == OrderType.CONTENT) {
 
-				boolean ownBook = userContentRepo.existsByUserIdAndBookIdAndAccessType(userId, item.bookid(),
+				boolean ownBook = userContentRepo.existsByUserIdAndBookIdAndAccessType(userId, item.bookId(),
 						OrderType.BOOK);
 
 				if (ownBook) {
@@ -283,5 +307,8 @@ public class OrderServiceImpl implements OrderService {
 
 		return orderMapper.getResponseToPayment(order);
 	}
+	
+	
+	
 
 }
