@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  author-service:
+    build:
+      context: ../..
+      dockerfile: Author-Service/Dockerfile
+    container_name: author-service
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/authorservice_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/Library-realm
+    ports:
+      - "8084:8080"
+    networks:
+      - Library-net
+
+networks:
+  Library-net:
+    external: true

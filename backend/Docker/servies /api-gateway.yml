@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+    api-gateway:
+        build:
+            context: ../..
+            dockerfile: Api-gateway/Dockerfile
+        container_name: api-gateway
+        restart: on-failure
+        environment:
+            SPRING_APPLICATION_NAME: api-gateway
+            SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/Library-realm
+        ports:
+            - "8089:8080"
+        depends_on:
+            - keycloak
+        networks:
+            - Library-net
+
+networks:
+  Library-net:
+    external: true

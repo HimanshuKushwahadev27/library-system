@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+    notification-service:
+        build:
+            context: ../..
+            dockerfile: notification-service/Dockerfile
+        container_name: notification-service
+        restart: on-failure
+        environment:
+            SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/Library-realm
+        ports:
+            - "9093:8080"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        networks:
+            - Library-net
+
+
+networks:
+  Library-net:
+    external: true

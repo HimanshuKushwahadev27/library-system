@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+    opensearch-dashboards:
+        image: opensearchproject/opensearch-dashboards:2.11.0
+        container_name: opensearch-dashboards
+        ports:
+            - "5601:5601"
+        environment:
+            OPENSEARCH_HOSTS: '["https://opensearch:9200"]'
+            OPENSEARCH_USERNAME: admin
+            OPENSEARCH_PASSWORD: admin
+            OPENSEARCH_SSL_VERIFICATIONMODE: none
+        depends_on:
+            - opensearch
+        networks:
+            - Library-net
+
+networks:
+  Library-net:
+    external: true

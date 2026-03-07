@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2.11.0
+    container_name: opensearch
+    environment:
+      - discovery.type=single-node
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=admin
+    ports:
+      - "9200:9200"
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    networks:
+      - Library-net
+
+volumes:
+  opensearch-data:
+
+networks:
+  Library-net:
+    external: true

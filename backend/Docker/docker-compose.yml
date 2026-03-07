@@ -224,10 +224,6 @@ services:
         ports:
             - "8089:8080"
         depends_on:
-            - author-service
-            - authoring-service
-            - user-service
-            - catalog-service
             - keycloak
         networks:
             - Library-net
