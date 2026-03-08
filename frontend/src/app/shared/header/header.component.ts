@@ -8,6 +8,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AuthButtonComponent } from '../auth-button/auth-button.component';
+import { RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,8 @@ import { AuthButtonComponent } from '../auth-button/auth-button.component';
      MatToolbarModule,
      MatButtonModule,
      ReactiveFormsModule,
-     MatAutocompleteModule
+     MatAutocompleteModule,
+     RouterLink
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

@@ -1,4 +1,4 @@
-import {  Injectable, signal } from '@angular/core';
+import {  computed, Injectable, signal } from '@angular/core';
 import {  OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from '../auth.config';
 
@@ -10,6 +10,7 @@ export class AuthService {
   
 
   isAuthenticated = signal(false);
+
   
   constructor(private oauthService: OAuthService) {
   }
@@ -21,7 +22,19 @@ export class AuthService {
     this.oauthService.setupAutomaticSilentRefresh();
 
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
+      this.updateAuthState();
+    });
 
+    this.oauthService.events.subscribe(() => {
+      this.updateAuthState();
+    });
+  }
+
+    private updateAuthState() {
+    this.isAuthenticated.set(
+      this.oauthService.hasValidAccessToken()
+    );
   }
 
   login(){
@@ -30,7 +43,6 @@ export class AuthService {
 
   logout(){
     this.oauthService.logOut();
-    this.isAuthenticated.set(false);
   }
 
   getToken(){
