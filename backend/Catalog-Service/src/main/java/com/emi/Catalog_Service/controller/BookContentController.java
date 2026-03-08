@@ -30,8 +30,6 @@ public class BookContentController {
 
 	private final BookContentService bookContentService;
 
-	
-	
 	@PostMapping(value="/create")
 	public ResponseEntity<ResponseContentDto> createBookContent(
 			@RequestBody @Valid RequestCreateContentDto request){

@@ -17,7 +17,7 @@ public class IdempotencyKeyFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -2; // run before UserId filter
+        return -2; 
     }
 
     @Override
@@ -26,7 +26,6 @@ public class IdempotencyKeyFilter implements GlobalFilter, Ordered {
         String idempotencyKey =
                 exchange.getRequest().getHeaders().getFirst(IDEMPOTENCY_HEADER);
 
-        // Only enforce for POST requests
         if (exchange.getRequest().getMethod() == HttpMethod.POST) {
 
             if (idempotencyKey == null || idempotencyKey.isBlank()) {

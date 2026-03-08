@@ -77,7 +77,7 @@ public class BookContentImpl implements BookContentService {
 	public ResponseContentDto getBookContentByContentId(UUID contentId, UUID keycloakId) {
 		
 		boolean hasAccess =
-			    ownershipRepo.existsByUserKeycloakIdAndChapterId(keycloakId, contentId);
+			    ownershipRepo.existsByUserKeycloakIdAndContentId(keycloakId, contentId);
 		
 		if(!hasAccess) {
 			throw new NotAuthorizedException("You havent purchased this book yet");
